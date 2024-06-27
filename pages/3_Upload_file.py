@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from io import StringIO
+import pm4py
 
 if 'original' not in st.session_state:
     st.session_state.original = pd.DataFrame()
@@ -41,12 +42,16 @@ if uploaded_file:
         if not pd.api.types.is_string_dtype(df['case:concept:name']):
             df['case:concept:name'] = df['case:concept:name'].astype(str)
 
+    
+
 
     st.markdown('##### 1. Next go to the _LoVizQL_ main page to define the context of the data. ')
     st.markdown('##### 2. Once the data context is defined, you can access _Pattern recommendation_ or _Pattern seacrh_ to obtain recommendations.')
 
     st.write('Original event log')
     st.dataframe(df)
+
+    pm4py.discover_dfg(df)
 
     
     st.session_state.original = df  # backup the filtered df

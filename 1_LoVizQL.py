@@ -533,16 +533,9 @@ def df_to_dfg(dfs,nodes,metric):
     for key, df in dfs.items():
         if metric in ['Absolute Frequency', 'Case Frequency', 'Max Repetitions', 'Total Repetitions', 'Frequency']:
             st.write(df, nodes)
-            # dfg, sa, ea = pm4py.discover_dfg(df, activity_key=nodes)
+            dfg, sa, ea = pm4py.discover_dfg(df, activity_key=nodes)
 
-            expected_columns = ['case:concept:name', 'concept:name', 'time:timestamp']
-            for col in expected_columns:
-                if col not in df.columns:
-                    st.write(f"Error: La columna '{col}' no está presente en el DataFrame")
-                else:
-                    st.write(f"EXITO: La columna '{col}' está presente en el DataFrame")
-
-            dfg, sa, ea = pm4py.discover_dfg(df)
+            # dfg, sa, ea = pm4py.discover_dfg(df, activity_key='City')
             # st.write('3) DFG descubierto')
             
             grafo = defineGraphFrequency(df, dfg, nodes, metric)

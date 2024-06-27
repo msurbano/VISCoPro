@@ -51,9 +51,13 @@ if uploaded_file:
     st.write('Original event log')
     st.dataframe(df)
 
-    st.write(df.columns.tolist())
-    pm4py.discover_dfg(df, case_id_key="case:concept:name", activity_key="concept:name", timestamp_key="time:timestamp")
-
+    # st.write(df.columns.tolist())
+    try:
+        dfg, start_activities, end_activities = pm4py.discover_dfg(df, case_id_key='case:concept:name', activity_key='concept:name', timestamp_key='time:timestamp')
+        # Resto del código
+    except Exception as e:
+        st.write("Error:", e)
+        raise  # Esto imprimirá el traceback completo
     
     st.session_state.original = df  # backup the filtered df
 

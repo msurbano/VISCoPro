@@ -533,7 +533,8 @@ def df_to_dfg(dfs,nodes,metric):
     for key, df in dfs.items():
         if metric in ['Absolute Frequency', 'Case Frequency', 'Max Repetitions', 'Total Repetitions', 'Frequency']:
             st.write(df, nodes)
-            dfg, sa, ea = pm4py.discover_dfg(df, activity_key=nodes)
+            # dfg, sa, ea = pm4py.discover_dfg(df, activity_key=nodes)
+            dfg, sa, ea = pm4py.discover_dfg(df, activity_key='concept:name')
             # st.write('3) DFG descubierto')
             
             grafo = defineGraphFrequency(df, dfg, nodes, metric)

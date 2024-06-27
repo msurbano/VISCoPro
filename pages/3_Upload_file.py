@@ -51,7 +51,8 @@ if uploaded_file:
     st.write('Original event log')
     st.dataframe(df)
 
-    pm4py.discover_dfg(df)
+    st.write(df.columns.tolist())
+    pm4py.discover_dfg(df, case_id_key='case:concept:name', activity_key='concept:name', timestamp_key='time:timestamp')
 
     
     st.session_state.original = df  # backup the filtered df

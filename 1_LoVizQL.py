@@ -539,7 +539,9 @@ def df_to_dfg(dfs,nodes,metric):
             for col in expected_columns:
                 if col not in df.columns:
                     st.write(f"Error: La columna '{col}' no está presente en el DataFrame")
-                    
+                else:
+                    st.write(f"EXITO: La columna '{col}' está presente en el DataFrame")
+
             dfg, sa, ea = pm4py.discover_dfg(df)
             # st.write('3) DFG descubierto')
             

@@ -380,7 +380,7 @@ def threshold(datos, metric, a, p, nodes):
             ac = dict(df[nodes].value_counts())            
 
             if(p==100 and a==100):
-                dfg_path = df
+                dfg_path = dfg_ini
             elif(p==100):
                 dfg_path, sa, ea, ac = dfg_filtering.filter_dfg_on_activities_percentage(dfg['dfg'], dfg['sa'], dfg['ea'], ac, a/100)
             elif(a==100):

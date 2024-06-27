@@ -128,10 +128,15 @@ def manipulation(df, original, i):
     def small_text(text):
         return f"<p style='font-size:11px; color:{'grey'}; font-style:{'italic'}; '>{text}</p>"
     
-    if(ft == 'Mandatory'):
-        st.sidebar.markdown(small_text("Es un filtro para ..."), unsafe_allow_html=True)
-
+    
     if(ft in ("Mandatory", "Forbidden", "Keep Selected")):
+        if(ft == 'Mandatory'):
+            st.sidebar.markdown(small_text("This filter removes all cases that do not have at least one event with one of the selected values."), unsafe_allow_html=True)
+        elif(ft == 'Forbidden'):
+            st.sidebar.markdown(small_text("This filter removes all cases that have at least one event with one of the selected values."), unsafe_allow_html=True)
+        else:
+            st.sidebar.markdown(small_text("This filter removes all events that do not have one of the selected values."), unsafe_allow_html=True)
+
 
         at = st.sidebar.selectbox('Attribute',
                     (original.columns), 
@@ -173,6 +178,8 @@ def manipulation(df, original, i):
         manip = [ft,(act1,act2),rango]
 
     elif(ft == "Endpoints"):
+        st.sidebar.markdown(small_text("This filter removes all cases in which the first and/or last events do not have one of the selected values."), unsafe_allow_html=True)
+        
         options = ['*'] + list(pm4py.get_start_activities(df))
         st.write(options)
 

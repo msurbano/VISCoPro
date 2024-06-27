@@ -534,6 +534,12 @@ def df_to_dfg(dfs,nodes,metric):
         if metric in ['Absolute Frequency', 'Case Frequency', 'Max Repetitions', 'Total Repetitions', 'Frequency']:
             st.write(df, nodes)
             # dfg, sa, ea = pm4py.discover_dfg(df, activity_key=nodes)
+
+            expected_columns = ['case:concept:name', 'concept:name', 'time:timestamp']
+            for col in expected_columns:
+                if col not in df.columns:
+                    st.write(f"Error: La columna '{col}' no está presente en el DataFrame")
+                    
             dfg, sa, ea = pm4py.discover_dfg(df)
             # st.write('3) DFG descubierto')
             

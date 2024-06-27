@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import pm4py
 import copy
+import deprecation
 import os
 from pm4py.objects.log.importer.xes import importer as xes_importer
 from pm4py.algo.discovery.dfg import algorithm as dfg_discovery

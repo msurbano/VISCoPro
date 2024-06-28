@@ -3,6 +3,31 @@ import pandas as pd
 from io import StringIO
 import pm4py
 
+from typing import Tuple, Union, List, Dict, Any, Optional, Set
+
+import pandas as pd
+from pandas import DataFrame
+
+from pm4py.algo.discovery.powl.inductive.utils.filtering import FILTERING_THRESHOLD
+from pm4py.algo.discovery.powl.inductive.variants.dynamic_clustering_frequency.dynamic_clustering_frequency_partial_order_cut import \
+    ORDER_FREQUENCY_RATIO
+from pm4py.algo.discovery.powl.inductive.variants.powl_discovery_varaints import POWLDiscoveryVariant
+from pm4py.objects.bpmn.obj import BPMN
+from pm4py.objects.dfg.obj import DFG
+from pm4py.objects.powl.obj import POWL
+from pm4py.objects.heuristics_net.obj import HeuristicsNet
+from pm4py.objects.transition_system.obj import TransitionSystem
+from pm4py.objects.trie.obj import Trie
+from pm4py.objects.log.obj import EventLog
+from pm4py.objects.log.obj import EventStream
+from pm4py.objects.petri_net.obj import PetriNet, Marking
+from pm4py.objects.process_tree.obj import ProcessTree
+from pm4py.util.pandas_utils import check_is_pandas_dataframe, check_pandas_dataframe_columns
+from pm4py.utils import get_properties, __event_log_deprecation_warning
+from pm4py.util import constants, pandas_utils
+import deprecation
+import importlib.util
+
 if 'original' not in st.session_state:
     st.session_state.original = pd.DataFrame()
 

@@ -3,6 +3,7 @@ import pandas as pd
 from io import StringIO
 import pm4py
 st.write(help(pm4py.discovery.discover_dfg))
+st.write(pm4py.__version__)
 
 # from typing import Tuple, Union, List, Dict, Any, Optional, Set
 
@@ -77,10 +78,18 @@ if uploaded_file:
     st.write('Original event log')
     st.dataframe(df)
 
+    
     # st.write(df.columns.tolist())
     try:
-        dfg, start_activities, end_activities = pm4py.discovery.discover_dfg(df, 'case:concept:name', 'concept:name', 'time:timestamp')
+        # dfg, start_activities, end_activities = pm4py.discovery.discover_dfg(df, 'case:concept:name', 'concept:name', 'time:timestamp')
         # Resto del código
+        dfg, start_activities, end_activities = pm4py.discovery.discover_dfg(
+            df,
+            case_id_glue='case:concept:name',
+            activity_key='concept:name',
+            timestamp_key='time:timestamp'
+        )
+
     except Exception as e:
         st.write("Error:", e)
         raise  # Esto imprimirá el traceback completo

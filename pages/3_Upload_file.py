@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from io import StringIO
 import pm4py
+help(pm4py.discovery.discover_dfg)
 
 # from typing import Tuple, Union, List, Dict, Any, Optional, Set
 

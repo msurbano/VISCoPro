@@ -53,7 +53,7 @@ if uploaded_file:
 
     # st.write(df.columns.tolist())
     try:
-        dfg, start_activities, end_activities = pm4py.discover_dfg(df, case_id_key='case:concept:name', activity_key='concept:name', timestamp_key='time:timestamp')
+        dfg, start_activities, end_activities = pm4py.discovery.discover_dfg(df, case_id_key='case:concept:name', activity_key='concept:name', timestamp_key='time:timestamp')
         # Resto del código
     except Exception as e:
         st.write("Error:", e)

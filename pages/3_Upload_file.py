@@ -81,7 +81,7 @@ if uploaded_file:
     
     # st.write(df.columns.tolist())
     try:
-        dfg, start_activities, end_activities = pm4py.discovery.discover_dfg(df, 'case:concept:name', 'concept:name', 'time:timestamp')
+        dfg, start_activities, end_activities = pm4py.discovery.discover_dfg(df)
         # Resto del código
         # dfg, start_activities, end_activities = pm4py.discovery.discover_dfg(
         #     df,

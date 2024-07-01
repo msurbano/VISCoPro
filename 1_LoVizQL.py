@@ -310,6 +310,8 @@ def manipulation(df, original, i):
 
         manip = [ft,act1,act2]
 
+    st.sidebar.markdown('prueba')
+    st.sidebar.markdown("""---""")
 
     filtered_dataframe={}
     
@@ -565,7 +567,7 @@ def manipulation(df, original, i):
 
     return filtered_dataframe 
 
-    st.sidebar.markdown("""---""")
+    
 
 
 def df_to_dfg(dfs,nodes,metric):

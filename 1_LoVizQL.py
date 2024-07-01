@@ -322,6 +322,8 @@ def manipulation(df, original, i):
     else:
         dfs=df 
 
+    st.write('Atributos manipulacion: ', manip)
+
     ftype = manip[0]
     v1 = manip[1]
     v2 = manip[2]

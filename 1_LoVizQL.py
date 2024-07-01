@@ -36,6 +36,7 @@ from PIL import Image
 from io import StringIO
 from pm4py.visualization.dfg.variants.frequency import apply
 from pm4py.visualization.dfg import visualizer as dfg_visualizer
+from streamlit import session_state as ss
 
 
 st.set_page_config(page_title="Main page")
@@ -74,6 +75,9 @@ def check_log(data):
 if "filter_types" not in st.session_state:
         st.session_state["filter_types"] = {}
 
+if "filter_type_group" not in st.session_state:
+        st.session_state["filter_type_group"] = {}
+
 if "attribute" not in st.session_state:
         st.session_state["attribute"] = {}
 
@@ -111,16 +115,43 @@ if "input_values" not in st.session_state:
     st.session_state["input_values"] = {}
 
 
-# Manipulation  (sacado de filter_type function)
+# Manipulation  
 def manipulation(df, original, i): 
     # log = check_log(df)
 
-    filters = ("Mandatory", "Forbidden", "Keep Selected", 
-           "Directly Followed", "Eventually Followed", "Keep Selected Fragments", 
-           'Timeframe','Path performance', "Case performance", 'Endpoints', 'Rework')
+    ft_group = st.sidebar.selectbox('Filter type', ('Attribute', 'Performance', 'Follower', 'Timeframe', 'Rework', 'Endpoints'),
+        index='ft_group_%s' % i, key='ft_group_%s' % i)
 
-    ft = st.sidebar.selectbox('Filter type', 
-            filters,  index=filters.index(st.session_state["filter_types"].get('ft_%s' % i, filters[0])), key='ft_%s' % i)
+    st.session_state["filter_type_group"]['ft_group_%s' % i] = ft_group
+
+    filters1 = ("Mandatory", "Forbidden", "Keep Selected")
+
+    filters2 = ('Path performance', "Case performance")
+
+    filters3 = ("Directly Followed", "Eventually Followed", "Keep Selected Fragments")
+
+    # filters = ("Mandatory", "Forbidden", "Keep Selected", 
+    #        "Directly Followed", "Eventually Followed", "Keep Selected Fragments", 
+    #        'Timeframe','Path performance', "Case performance", 'Endpoints', 'Rework')
+
+    if(ft_group == 'Attribute'):
+        ft = st.sidebar.selectbox('Filter mode', 
+            filters1,  index=filters1.index(st.session_state["filter_types"].get('ft_%s' % i, filters1[0])), key='ft_%s' % i)
+    
+    elif(ft_group == 'Performance'):
+        ft = st.sidebar.selectbox('Filter mode', 
+            filters2,  index=filters2.index(st.session_state["filter_types"].get('ft_%s' % i, filters2[0])), key='ft_%s' % i)
+    
+    elif(ft_group == 'Follower'):
+        ft = st.sidebar.selectbox('Filter mode', 
+            filters3,  index=filters3.index(st.session_state["filter_types"].get('ft_%s' % i, filters3[0])), key='ft_%s' % i)
+
+    else:
+        ft = ft_group
+    
+    
+    # ft = st.sidebar.selectbox('Filter type', 
+    #         filters,  index=filters.index(st.session_state["filter_types"].get('ft_%s' % i, filters[0])), key='ft_%s' % i)
 
     st.session_state["filter_types"]['ft_%s' % i] = ft
 
@@ -803,72 +834,14 @@ def returnMaxRepititionsEdges(df):
 # dataframe = pd.read_csv('./datasets/example.csv')
 # dataframe = cargar_datos()
 
-
-# if 'dataframe' not in st.session_state:
-#     st.session_state.dataframe = pd.DataFrame()
-#     st.markdown(" ##### **Please, upload the event.** ")
-# else:
-#     dataframe = st.session_state.dataframe
-
 if 'original' not in st.session_state:
     st.session_state.original = pd.DataFrame()
     st.markdown(" ##### **Please, upload the event log in _Upload file_.** ")
 
-# dataframe = st.session_state.dataframe
 
-# if 'filtered_df' not in st.session_state:
-#     st.session_state.filtered_df = pd.DataFrame()
-
-# uploaded_file = st.sidebar.file_uploader('Choose file')
-
-# if uploaded_file:
-#     # To read file as bytes:
-#     bytes_data = uploaded_file.getvalue()
-#     #st.write(bytes_data)
-
-#     # To convert to a string based IO:
-#     stringio = StringIO(uploaded_file.getvalue().decode("ISO-8859-1"))
-#     #st.write(stringio)
-
-#     # To read file as string:
-#     string_data = stringio.read()
-
-#     try:
-#         try:
-#             dataframe = pd.read_csv(uploaded_file)
-#         except:
-#             dataframe = pd.read_excel(uploaded_file)
-#     except:
-#         st.error('Error loading file. Please be sure to either upload a CSV or an XLSX')
-
-    # st.write('start df')
-    # st.dataframe(df)
-
-    # user_input = st.slider(
-    #     'Select a range of values',
-    #     0, 7, 3)
-
-    # filter_dataframe = df.loc[df.col1 == user_input]
-    # st.session_state.dataframe = filter_dataframe  # backup the filtered df
-
-    # st.session_state.dataframe = dataframe
-
-    # st.write('dataframe')
-    # st.dataframe(st.session_state.dataframe)
-
-    # dataframe = st.session_state.dataframe
-
-    # if 'inicial' not in st.session_state:
-    #     st.session_state.inicial = dataframe
-    
-# if st.session_state.dataframe is not None:
-#     dataframe = st.session_state.dataframe
-#     st.write(dataframe)
 
 if len(st.session_state.original):
-#     dataframe = st.session_state.dataframe
     dataframe = st.session_state.original
-    # st.write(dataframe)
 
     if 'inicial' not in st.session_state:
         st.session_state.inicial = dataframe
@@ -876,15 +849,6 @@ if len(st.session_state.original):
     left_column, right_column = st.columns(2)
 
     if dataframe is not None:
-    #     if pd.api.types.is_datetime64_any_dtype(dataframe['time:timestamp']):
-    #         st.write("1) La columna timestamp es de tipo datetime")
-    #     else:
-    #         # st.write('no es fecha')
-    #         dataframe['time:timestamp'] = pd.to_datetime(dataframe['time:timestamp'])
-    #         # st.write('1) timestamp convertido a tipo datetime')
-
-    #     if not pd.api.types.is_string_dtype(dataframe['case:concept:name']):
-    #         dataframe['case:concept:name'] = dataframe['case:concept:name'].astype(str)
 
         if st.checkbox('Show Event log'):
             dataframe
@@ -899,9 +863,8 @@ if len(st.session_state.original):
         
         col1, col2, col3, col4 = st.columns(4)
 
-        import streamlit as st
-        from streamlit import session_state as ss
-
+        
+        
         if "nodes" not in ss:
             ss["nodes"] = None
 

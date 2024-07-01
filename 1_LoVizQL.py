@@ -119,7 +119,7 @@ if "input_values" not in st.session_state:
 def manipulation(df, original, i): 
     # log = check_log(df)
 
-    ft_group = st.sidebar.selectbox('Filter type', ('Attribute', 'Performance', 'Follower', 'Timeframe', 'Rework', 'Endpoints'),
+    ft_group = st.sidebar.selectbox('Filter type', ['Attribute', 'Performance', 'Follower', 'Timeframe', 'Rework', 'Endpoints'],
         index='ft_group_%s' % i, key='ft_group_%s' % i)
 
     st.session_state["filter_type_group"]['ft_group_%s' % i] = ft_group
@@ -924,7 +924,14 @@ if len(st.session_state.original):
 
         else:
             while (cont < n):
-                filtered = manipulation(dataframe, original, cont)
+                try:
+    
+                    filtered = manipulation(dataframe, original, cont)
+                except Exception as e:
+                    st.error(f"Error: {e}")
+                    st.error(traceback.format_exc())
+
+                # filtered = manipulation(dataframe, original, cont)
                 dataframe = filtered
                 cont = cont+1
 

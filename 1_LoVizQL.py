@@ -890,7 +890,7 @@ if len(st.session_state.original):
 
     if dataframe is not None:
 
-        if st.checkbox('Show Event log'):
+        if st.checkbox('Show original event log'):
             dataframe
 
         atributos = dataframe.columns.tolist()

@@ -45,13 +45,13 @@ if uploaded_file:
             df['case:concept:name'] = df['case:concept:name'].astype(str)
 
     
-
+    st.write('Original event log')
+    st.dataframe(df)
 
     st.markdown('##### 1. Next go to the _LoVizQL_ main page to define the context of the data. ')
     st.markdown('##### 2. Once the data context is defined, you can access _Pattern recommendation_ or _Pattern seacrh_ to obtain recommendations.')
 
-    st.write('Original event log')
-    st.dataframe(df)
+    
 
     
     # # st.write(df.columns.tolist())
@@ -70,6 +70,6 @@ if uploaded_file:
     #     raise  # Esto imprimirá el traceback completo
     
     st.session_state.original = df  
-    
+
     # st.write('filtered df')
     # st.dataframe(st.session_state.filtered_df)

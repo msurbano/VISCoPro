@@ -565,6 +565,8 @@ def manipulation(df, original, i):
 
     return filtered_dataframe 
 
+    st.sidebar.markdown("""---""")
+
 
 def df_to_dfg(dfs,nodes,metric):
     # st.write('paso 1')

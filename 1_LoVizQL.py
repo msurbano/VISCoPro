@@ -329,8 +329,8 @@ def manipulation(df, original, i):
     v2 = manip[2]
 
     # st.write(ftype)
-    st.write(v1)
-    st.write(v2)
+    # st.write(v1)
+    # st.write(v2)
 
     for key, df in dfs.items():
 

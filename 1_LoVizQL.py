@@ -120,7 +120,7 @@ def manipulation(df, original, i):
     # log = check_log(df)
 
     ft_group = st.sidebar.selectbox('Filter type', ('Attribute', 'Performance', 'Follower', 'Timeframe', 'Rework', 'Endpoints'),
-        index='ft_group_%s' % i, key='ft_group_%s' % i)
+         key='ft_group_%s' % i)
 
     st.session_state["filter_type_group"]['ft_group_%s' % i] = ft_group
 

@@ -398,7 +398,7 @@ def manipulation(df, original, i):
                         if(len(grupo)!=0):
                             if(key==""):
                                 filtered_dataframe[str([v])] = grupo
-                                    else:
+                            else:
                                 filtered_dataframe[key + " - " + str([v])] = grupo
                             # filtered_dataframe[v] = grupo
                 # st.write(v1, v2)

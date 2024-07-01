@@ -135,9 +135,17 @@ def manipulation(df, original, i):
     #        'Timeframe','Path performance', "Case performance", 'Endpoints', 'Rework')
 
     if(ft_group == 'Attribute'):
-        ft = st.sidebar.selectbox('Filter mode', 
-            filters1,  index=filters1.index(st.session_state["filter_types"].get('ft_%s' % i, filters1[0])), key='ft_%s' % i)
+        # ft = st.sidebar.selectbox('Filter mode', 
+        #     filters1,  index=filters1.index(st.session_state["filter_types"].get('ft_%s' % i, filters1[0])), key='ft_%s' % i)
     
+        default_value = st.session_state["filter_types"].get('ft_%s' % i, filters1[0])
+        # Asegurarse de que el valor predeterminado esté en filters1
+        if default_value not in filters1:
+            default_value = filters1[0]
+
+        ft = st.sidebar.selectbox('Filter mode', filters1, index=filters1.index(default_value), key='ft_%s' % i)
+        st.session_state["filter_types"]['ft_%s' % i] = ft
+
     elif(ft_group == 'Performance'):
         ft = st.sidebar.selectbox('Filter mode', 
             filters2,  index=filters2.index(st.session_state["filter_types"].get('ft_%s' % i, filters2[0])), key='ft_%s' % i)

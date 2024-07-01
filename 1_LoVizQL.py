@@ -384,7 +384,7 @@ def manipulation(df, original, i):
                 for v in valores:
                     grupo = pm4py.filter_trace_attribute_values(df, atr, [v])
                     if(len(grupo)!=0):
-                        filtered_dataframe[v] = grupo
+                        filtered_dataframe[[v]] = grupo
             else:    
                 # st.write(v1)
                 if(g==True):
@@ -400,7 +400,7 @@ def manipulation(df, original, i):
                         if(key==""):
                             filtered_dataframe[str(v2)] = grupo
                         else:
-                            filtered_dataframe[key + " ; " + str(v2)] = grupo
+                            filtered_dataframe[key + " - " + str(v2)] = grupo
                         
 
         elif ftype == 'Keep Selected':

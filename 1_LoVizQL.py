@@ -322,11 +322,15 @@ def manipulation(df, original, i):
     else:
         dfs=df 
 
-    st.write('Atributos manipulacion: ', manip)
+    # st.write('Atributos manipulacion: ')
 
     ftype = manip[0]
     v1 = manip[1]
     v2 = manip[2]
+
+    # st.write(ftype)
+    st.write(v1)
+    st.write(v2)
 
     for key, df in dfs.items():
 
@@ -374,11 +378,11 @@ def manipulation(df, original, i):
 
         elif ftype == 'Mandatory':
             g = v1[1]
-            v1 = v1[0] 
+            atr = v1[0] 
             if v2 == ['*']: 
-                valores = df[v1].unique()
+                valores = df[atr].unique()
                 for v in valores:
-                    grupo = pm4py.filter_trace_attribute_values(df, v1, [v])
+                    grupo = pm4py.filter_trace_attribute_values(df, atr, [v])
                     if(len(grupo)!=0):
                         filtered_dataframe[v] = grupo
             else:    
@@ -386,12 +390,12 @@ def manipulation(df, original, i):
                 if(g==True):
                     # st.write('prueba')
                     for v in v2:
-                        grupo = pm4py.filter_trace_attribute_values(df, v1, [v])
+                        grupo = pm4py.filter_trace_attribute_values(df, atr, [v])
                         if(len(grupo)!=0):
                             filtered_dataframe[v] = grupo
                 # st.write(v1, v2)
                 else:
-                    grupo = pm4py.filter_trace_attribute_values(df, v1, v2)
+                    grupo = pm4py.filter_trace_attribute_values(df, atr, v2)
                     if(len(grupo)!=0):
                         if(key==""):
                             filtered_dataframe[str(v2)] = grupo
@@ -401,23 +405,23 @@ def manipulation(df, original, i):
 
         elif ftype == 'Keep Selected':
             g = v1[1]
-            v1 = v1[0] 
+            atr = v1[0] 
             
             if v2 == ['*']:  
-                valores = df[v1].unique()
+                valores = df[atr].unique()
                 for v in valores:
-                    grupo = df[df[v1]==v]
+                    grupo = df[df[atr]==v]
                     if(len(grupo)!=0):
                         filtered_dataframe[v] = grupo
             else:   
                 if(g==True):
-                    valores = df[v1].unique()
+                    valores = df[atr].unique()
                     for v in v2:
-                        grupo = df[df[v1]==v]
+                        grupo = df[df[atr]==v]
                         if(len(grupo)!=0):
                             filtered_dataframe[v] = grupo
                 else:                    
-                    grupo = pm4py.filter_event_attribute_values(df, v1, v2,  level='event')
+                    grupo = pm4py.filter_event_attribute_values(df, atr, v2,  level='event')
                     if(len(grupo)!=0):
                         if(key==""):
                             filtered_dataframe[str(v2)] = grupo
@@ -426,24 +430,22 @@ def manipulation(df, original, i):
 
         elif ftype == 'Forbidden':   
             g = v1[1] 
-            v1 = v1[0] 
+            atr = v1[0] 
             
             if v2 == ['*']: 
-                valores = df[v1].unique()
+                valores = df[atr].unique()
                 for v in valores:
-                    grupo = pm4py.filter_trace_attribute_values(df, v1, [v], retain=False)
+                    grupo = pm4py.filter_trace_attribute_values(df, atr, [v], retain=False)
                     if(len(grupo)!=0):
                         filtered_dataframe[v] = grupo
             else:       
                 if(g==True):
-                    # st.write('prueba')
                     for v in v2:
-                        grupo = pm4py.filter_trace_attribute_values(df, v1, [v], retain=False)
+                        grupo = pm4py.filter_trace_attribute_values(df, atr, [v], retain=False)
                         if(len(grupo)!=0):
                             filtered_dataframe[v] = grupo
-                # st.write(v1, v2)
                 else:
-                    grupo = pm4py.filter_trace_attribute_values(df, v1, v2, retain=False)
+                    grupo = pm4py.filter_trace_attribute_values(df, atr, v2, retain=False)
                     if(len(grupo)!=0):
                         if(key==""):
                             filtered_dataframe[str(v2)] = grupo

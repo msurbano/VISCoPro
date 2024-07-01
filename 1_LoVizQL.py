@@ -929,7 +929,7 @@ if len(st.session_state.original):
                     filtered = manipulation(dataframe, original, cont)
                 except Exception as e:
                     st.error(f"Error: {e}")
-                    st.error(traceback.format_exc())
+                    raise
 
                 # filtered = manipulation(dataframe, original, cont)
                 dataframe = filtered

@@ -37,7 +37,7 @@ from io import StringIO
 from pm4py.visualization.dfg.variants.frequency import apply
 from pm4py.visualization.dfg import visualizer as dfg_visualizer
 from streamlit import session_state as ss
-from streamlit_extras.switch_page_button import switch_page
+# from streamlit_extras.switch_page_button import switch_page
 
 
 st.set_page_config(page_title="Main page")

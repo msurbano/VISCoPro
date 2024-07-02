@@ -28,9 +28,11 @@ if uploaded_file:
         try:
             df = pd.read_csv(uploaded_file)
         except:
-            df = pd.read_excel(uploaded_file)
+            log = pm4py.read_xes(uploaded_file)
+            df = pm4py.convert_to_dataframe(log)
+            # df = pd.read_excel(uploaded_file)
     except:
-        st.error('Error loading file. Please be sure to either upload a CSV or an XLSX')
+        st.error('Error loading file. Please be sure to either upload a CSV or a XES')
 
     if df is not None:
         if pd.api.types.is_datetime64_any_dtype(df['time:timestamp']):

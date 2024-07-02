@@ -29,6 +29,7 @@ if uploaded_file:
             df = pd.read_csv(uploaded_file)
         except:
             log = pm4py.read_xes(uploaded_file)
+            st.write(log)
             df = pm4py.convert_to_dataframe(log)
             st.dataframe(df)
             # df = pd.read_excel(uploaded_file)

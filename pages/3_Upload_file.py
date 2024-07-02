@@ -30,6 +30,7 @@ if uploaded_file:
         except:
             log = pm4py.read_xes(uploaded_file)
             df = pm4py.convert_to_dataframe(log)
+            st.dataframe(df)
             # df = pd.read_excel(uploaded_file)
     except:
         st.error('Error loading file. Please be sure to either upload a CSV or a XES')

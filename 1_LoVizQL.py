@@ -877,6 +877,7 @@ def returnMaxRepititionsEdges(df):
 if 'original' not in st.session_state:
     st.session_state.original = pd.DataFrame()
     st.markdown(" ##### **Please, upload the event log in _Upload file_.** ")
+    st.button(page="3_Upload_file")
 
 
 

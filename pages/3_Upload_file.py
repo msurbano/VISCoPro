@@ -23,18 +23,19 @@ if uploaded_file:
 
     # To read file as string:
     string_data = stringio.read()
+    st.write(string_data)
 
     try:
         try:
             df = pd.read_csv(uploaded_file)
         except:
-            log = pm4py.read_xes(uploaded_file)
-            st.write(log)
-            df = pm4py.convert_to_dataframe(log)
-            st.dataframe(df)
-            # df = pd.read_excel(uploaded_file)
+            # log = pm4py.read_xes(uploaded_file)
+            # st.write(log)
+            # df = pm4py.convert_to_dataframe(log)
+            # st.dataframe(df)
+            df = pd.read_excel(uploaded_file)
     except:
-        st.error('Error loading file. Please be sure to either upload a CSV or a XES')
+        st.error('Error loading file. Please be sure to either upload a CSV or a XLSX')
 
     if df is not None:
         if pd.api.types.is_datetime64_any_dtype(df['time:timestamp']):

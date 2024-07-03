@@ -5,4 +5,12 @@ that enables the conversion of data Python scripts into shareable web applicatio
 
 ![User interface: Main page](https://github.com/msurbano/VISCoDFG/blob/main/User_interface_home_page.png)
 
-Use case:
+### Use case: Find bottlenecks in the process 
+
+- Data source: Business Process Intelligence Challenge 2020 Event Log (https://icpmconference.org/2020/bpi-challenge/)
+- We focused on the 5th question of this challenge: *Where are the bottlenecks in the process of a travel declaration?*
+
+Open the application and go to the *Upload file* page and click the *Browse files* button.
+
+![image](https://github.com/msurbano/VISCoDFG/assets/92515344/21de6cf3-0ac5-42d5-b1a7-b4a98a077f80)
+

@@ -7,10 +7,18 @@ that enables the conversion of data Python scripts into shareable web applicatio
 
 ### Use case: Find bottlenecks in the process 
 
-- Data source: Business Process Intelligence Challenge 2020 Event Log (https://icpmconference.org/2020/bpi-challenge/)
+- Data source: Business Process Intelligence Challenge 2020 International Declarations Event Log (https://icpmconference.org/2020/bpi-challenge/)
 - We focused on the 5th question of this challenge: *Where are the bottlenecks in the process of a travel declaration?*
 
-Open the application and go to the *Upload file* page and click the *Browse files* button.
+We open the application and we go to the *Upload file* page and click the *Browse files* button.
 
 ![image](https://github.com/msurbano/VISCoDFG/assets/92515344/21de6cf3-0ac5-42d5-b1a7-b4a98a077f80)
+
+We can examine the event log when it is selected.
+
+![image](https://github.com/msurbano/VISCoDFG/assets/92515344/dfb42a77-d8d1-4f3b-8151-9a5b44814c3f)
+
+Next we go to the LoVizQL page where we can define the context of the data. To look for bottlenecks in the process, we can focus on identifying certain attribute values that influence the time performance of the process. 
+
+![image](https://github.com/msurbano/VISCoDFG/assets/92515344/d817c631-e284-4b25-8049-451def2e5a6f)
 

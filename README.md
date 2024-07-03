@@ -20,3 +20,9 @@ Next we go to the LoVizQL page where we can define the context of the data. To l
 
 ![image](https://github.com/msurbano/VISCoDFG/assets/92515344/d817c631-e284-4b25-8049-451def2e5a6f)
 
+When a manipulation action is added, all its properties are displayed: *Filter type* (in this case, by Attributes), *Filter mode* (in this case, Mandatory - to obtain the traces in which at least one event has a selected value), and the *Value* or values of this attribute. In addition, by clicking on *Group by*, we choose to group the event log by these values instead of filtering.
+
+![image](https://github.com/msurbano/VISCoDFG/assets/92515344/c33d1e72-f594-45a0-ae37-8d0ed5efbf97)
+
+
+

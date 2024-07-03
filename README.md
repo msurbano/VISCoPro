@@ -20,9 +20,17 @@ Next we go to the LoVizQL page where we can define the context of the data. To l
 
 ![image](https://github.com/msurbano/VISCoDFG/assets/92515344/d817c631-e284-4b25-8049-451def2e5a6f)
 
-When a manipulation action is added, all its properties are displayed: *Filter type* (in this case, by Attributes), *Filter mode* (in this case, Mandatory - to obtain the traces in which at least one event has a selected value), and the *Value* or values of this attribute. In addition, by clicking on *Group by*, we choose to group the event log by these values instead of filtering.
+When a manipulation action is added, all its properties are displayed: *Filter type* (in this case, by Attributes), *Filter mode* (in this case, Mandatory, to obtain the traces in which at least one event has a selected value), and the *Value* or values of this attribute. In addition, by clicking on *Group by*, we choose to group the event log by these values instead of filtering. We chose the case:Permit ProjectNumber attribute to look for differences between groups of travel declarations according to the project to which they are linked. In addition, we choose the properties of the resulting collection of DFGs from this set of event log subset. In this case, we use the concept:name attribute for the nodes and the Mean Cycle Time metric in the nodes and transitions. Next, by clicking on *Show DFGs*, we can see the resulting collection of visualizations.
 
-![image](https://github.com/msurbano/VISCoDFG/assets/92515344/c33d1e72-f594-45a0-ae37-8d0ed5efbf97)
+![image](https://github.com/msurbano/VISCoDFG/assets/92515344/261b0271-93ca-421c-ae51-10c1df319728)
+
+Finally, we access the Pattern Specification page where the system provides a set of objectives and we select that we are interested in Identifying activities as bottlenecks. Furthermore, we customize the criteria by which the results will be obtained, indicating that we want to identify those DFGs that contain at least one of the 3 activities with the longest duration of the entire process.
+
+![image](https://github.com/msurbano/VISCoDFG/assets/92515344/d0aa739a-fd92-410d-bf8b-0a1775c34fc0)
+
+
+
+
 
 
 

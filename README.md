@@ -16,7 +16,7 @@ We can examine the event log when it is selected.
 
 ![image](https://github.com/msurbano/VISCoDFG/assets/92515344/dfb42a77-d8d1-4f3b-8151-9a5b44814c3f)
 
-Next we go to the LoVizQL page where we can define the context of the data. To look for bottlenecks in the process, we can focus on identifying certain attribute values that influence the time performance of the process. Therefore, to manipulate the event log and obtain a set of data subsets, it is necessary to apply one or more manipulation actions by clicking on *+ Number of manipulation actions*.
+Next we go to the ***LoVizQL page*** where we can define the context of the data. To look for bottlenecks in the process, we can focus on identifying certain attribute values that influence the time performance of the process. Therefore, to manipulate the event log and obtain a set of data subsets, it is necessary to apply one or more manipulation actions by clicking on *+ Number of manipulation actions*.
 
 ![image](https://github.com/msurbano/VISCoDFG/assets/92515344/d817c631-e284-4b25-8049-451def2e5a6f)
 
@@ -24,7 +24,7 @@ When a manipulation action is added, all its properties are displayed: *Filter t
 
 ![image](https://github.com/msurbano/VISCoDFG/assets/92515344/261b0271-93ca-421c-ae51-10c1df319728)
 
-Finally, we access the Pattern Specification page where the system provides a set of objectives and we select that we are interested in Identifying activities as bottlenecks. Furthermore, we customize the criteria by which the results will be obtained, indicating that we want to identify those DFGs that contain at least one of the 3 activities with the longest duration of the entire process.
+Finally, we access the ***Pattern Specification page*** where the system provides a set of objectives and we select that we are interested in Identifying activities as bottlenecks. Furthermore, we customize the criteria by which the results will be obtained, indicating that we want to identify those DFGs that contain at least one of the 3 activities with the longest duration of the entire process.
 
 ![image](https://github.com/msurbano/VISCoDFG/assets/92515344/d0aa739a-fd92-410d-bf8b-0a1775c34fc0)
 

@@ -774,7 +774,7 @@ def threshold(datos, metric, a, p, nodes):
 
             gviz=apply(dfg_custom,None,None,metric_nodes,None)
 
-            dfg_visualizer.save(gviz, './figures/dfg' + str(ident) + '.svg')
+            dfg_visualizer.save(gviz, './figures/dfg' + str(ident) + '.png')
 
             st.write(str(key))
             st.image( './figures/dfg' + str(ident), output_format="auto")

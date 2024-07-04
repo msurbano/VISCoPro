@@ -376,7 +376,7 @@ def manipulation(df, original, i):
         elif ftype == 'Mandatory':
             g = v1[1]
             atr = v1[0] 
-            if v2 == ['*']: 
+            if v2 == ['* All values']: 
                 valores = df[atr].unique()
                 for v in valores:
                     grupo = pm4py.filter_trace_attribute_values(df, atr, [v])
@@ -412,7 +412,7 @@ def manipulation(df, original, i):
             g = v1[1]
             atr = v1[0] 
             
-            if v2 == ['*']:  
+            if v2 == ['* All values']:  
                 valores = df[atr].unique()
                 for v in valores:
                     grupo = df[df[atr]==v]
@@ -445,7 +445,7 @@ def manipulation(df, original, i):
             g = v1[1] 
             atr = v1[0] 
             
-            if v2 == ['*']: 
+            if v2 == ['* All values']: 
                 valores = df[atr].unique()
                 for v in valores:
                     grupo = pm4py.filter_trace_attribute_values(df, atr, [v], retain=False)
@@ -485,14 +485,14 @@ def manipulation(df, original, i):
             log_start = pm4py.get_start_activities(df)
             log_end = pm4py.get_end_activities(df)
 
-            if (v1 == ['*'] and v2 == []):
+            if (v1 == ['* All values'] and v2 == []):
                 for a in log_start:
                     grupo = pm4py.filter_start_activities(df, [a])
                     # grupo = pm4py.convert_to_dataframe(filtered_log)
                     if(len(grupo)!=0):
                         filtered_dataframe[a + ' - ' + 'endpoints'] = grupo
 
-            elif (v1 == ['*'] and v2 == ['*']):
+            elif (v1 == ['* All values'] and v2 == ['* All values']):
                 for a in log_start:
                     for e in log_end:
                         filtered_log = pm4py.filter_start_activities(df, [a])
@@ -501,7 +501,7 @@ def manipulation(df, original, i):
                         if(len(grupo)!=0):
                             filtered_dataframe[a + ' - ' + e] = grupo
             
-            elif (v1 == ['*'] and v2 != []):
+            elif (v1 == ['* All values'] and v2 != []):
                 for a in log_start:
                     filtered_log = pm4py.filter_start_activities(df, [a])
                     grupo = pm4py.filter_end_activities(filtered_log, v2)
@@ -509,7 +509,7 @@ def manipulation(df, original, i):
                     if(len(grupo)!=0):
                         filtered_dataframe[a + ' - ' + str(v2)] = grupo
 
-            elif (v1 != [] and v2 == ['*']):
+            elif (v1 != [] and v2 == ['* All values']):
                 for e in log_end:
                     filtered_log = pm4py.filter_end_activities(df, [e])
                     grupo = pm4py.filter_start_activities(filtered_log, v1)
@@ -517,7 +517,7 @@ def manipulation(df, original, i):
                     if(len(grupo)!=0):
                         filtered_dataframe[str(v1) + ' - ' + e] = grupo
 
-            elif (v1 == [] and v2 == ['*']):
+            elif (v1 == [] and v2 == ['* All values']):
                 for e in log_end:
                     grupo = pm4py.filter_end_activities(df, [e])
                     # grupo = pm4py.convert_to_dataframe(filtered_log)

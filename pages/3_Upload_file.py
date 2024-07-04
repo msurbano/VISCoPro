@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from io import StringIO
 
+st.title("🎈 VISCoPro")
+
 if 'original' not in st.session_state:
     st.session_state.original = pd.DataFrame()
 

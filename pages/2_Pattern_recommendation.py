@@ -36,6 +36,8 @@ from pm4py.visualization.dfg import visualizer as dfg_visualizer
 from collections import Counter
 from itertools import combinations
 
+st.title("🎈 VISCoPro")
+
 
 st.set_page_config(page_title="Pattern recommendation")
 

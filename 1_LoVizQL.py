@@ -774,10 +774,22 @@ def threshold(datos, metric, a, p, nodes):
 
             gviz=apply(dfg_custom,None,None,metric_nodes,None)
 
-            dfg_visualizer.save(gviz, './figures/dfg' + str(ident) + '.svg')
+            svg_path = f'./figures/dfg{ident}.svg'
+            dfg_visualizer.save(gviz, svg_path)
 
+            # Leer el contenido del archivo SVG
+            with open(svg_path, 'r') as file:
+                svg_content = file.read()
+
+            # Mostrar el identificador y la imagen SVG en Streamlit
             st.write(str(key))
-            st.image( './figures/dfg' + str(ident), output_format="auto")
+            st.markdown(f'<div>{svg_content}</div>', unsafe_allow_html=True)
+
+
+            # dfg_visualizer.save(gviz, './figures/dfg' + str(ident) + '.svg')
+
+            # st.write(str(key))
+            # st.image( './figures/dfg' + str(ident), output_format="auto")
             ident = ident + 1
 
 def removeEdges(G,filteredEdges):

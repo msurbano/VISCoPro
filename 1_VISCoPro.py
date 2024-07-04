@@ -43,7 +43,7 @@ st.set_page_config(page_title="Main page")
 
 pd.set_option("styler.render.max_elements", 2000000)
 
-st.title("🎈 Okld's Gallery")
+st.title("🎈 VISCoPro")
 
 
 

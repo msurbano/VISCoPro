@@ -864,10 +864,10 @@ def returnMaxRepititionsEdges(df):
 
 if 'original' not in st.session_state:
 
-    log_prueba = pm4py.read_xes("datasets/BPI_Challenge_2019.xes")
-    df_prueba = pm4py.convert_to_dataframe(log_prueba)
-    df_prueba.to_csv('BPIC2019.csv', index=False)
-    st.dataframe(df_prueba)
+    # log_prueba = pm4py.read_xes("datasets/BPI_Challenge_2019.xes")
+    # df_prueba = pm4py.convert_to_dataframe(log_prueba)
+    # df_prueba.to_csv('BPIC2019.csv', index=False)
+    # st.dataframe(df_prueba)
 
 
     st.session_state.original = pd.DataFrame()

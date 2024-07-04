@@ -37,7 +37,6 @@ from io import StringIO
 from pm4py.visualization.dfg.variants.frequency import apply
 from pm4py.visualization.dfg import visualizer as dfg_visualizer
 from streamlit import session_state as ss
-# from streamlit_extras.switch_page_button import switch_page
 
 
 st.set_page_config(page_title="Main page")
@@ -45,8 +44,7 @@ st.set_page_config(page_title="Main page")
 pd.set_option("styler.render.max_elements", 2000000)
 
 
-# st.markdown("# Main page 🎈")
-# st.sidebar.markdown("# Main page 🎈")
+
 
 
 # Convertir timestamp a tipo date
@@ -192,10 +190,12 @@ def manipulation(df, original, i):
         valores = original[at].unique()
               
         # value = st.sidebar.multiselect('Value', (['*'] + list(valores) ), key='value_%s' % i)
-        value = st.sidebar.multiselect('Value', (['*'] + list(valores)), key='value_%s' % i, default=st.session_state["values"].get('value_%s' % i, []))
+        value = st.sidebar.multiselect('Value', (['* All values'] + list(valores)), key='value_%s' % i, default=st.session_state["values"].get('value_%s' % i, []))
         st.session_state["values"]['value_%s' % i] = value
 
         manip = [ft,(at,g),value]
+
+        # st.write(manip)
 
         
 
@@ -221,8 +221,8 @@ def manipulation(df, original, i):
     elif(ft == "Endpoints"):
         st.sidebar.markdown(small_text("This filter removes all cases in which the first and/or last events do not have one of the selected values."), unsafe_allow_html=True)
         
-        options = ['*'] + list(pm4py.get_start_activities(df))
-        st.write(options)
+        options = ['* All values'] + list(pm4py.get_start_activities(df))
+        # st.write(options)
 
         default_values = st.session_state["act1"].get('act1_%s' % i, [])
         valid_defaults = [val for val in default_values if val in options]
@@ -230,8 +230,8 @@ def manipulation(df, original, i):
         act1 = st.sidebar.multiselect('From', (options), key='act1_%s' % i, default=valid_defaults)
         st.session_state["act1"]['act1_%s' % i] = act1
 
-        options2 = ['*'] + list(pm4py.get_end_activities(df))
-        st.write(options2)
+        options2 = ['* All values'] + list(pm4py.get_end_activities(df))
+        # st.write(options2)
 
         default_values2 = st.session_state["act2"].get('act2_%s' % i, [])
         valid_defaults2 = [val for val in default_values2 if val in options2]
@@ -323,15 +323,11 @@ def manipulation(df, original, i):
     else:
         dfs=df 
 
-    # st.write('Atributos manipulacion: ')
+    # st.write('Atributos manipulacion: ', manip)
 
     ftype = manip[0]
     v1 = manip[1]
     v2 = manip[2]
-
-    # st.write(ftype)
-    # st.write(v1)
-    # st.write(v2)
 
     for key, df in dfs.items():
 
@@ -380,16 +376,12 @@ def manipulation(df, original, i):
         elif ftype == 'Mandatory':
             g = v1[1]
             atr = v1[0] 
-            if v2 == ['*']: 
+            if v2 == ['* All values']: 
                 valores = df[atr].unique()
                 for v in valores:
                     grupo = pm4py.filter_trace_attribute_values(df, atr, [v])
                     if(len(grupo)!=0):
-                        if(key==""):
-                            filtered_dataframe[str([v])] = grupo
-                        else:
-                            filtered_dataframe[key + " - " + str([v])] = grupo
-                        
+                        filtered_dataframe[v] = grupo
             else:    
                 # st.write(v1)
                 if(g==True):
@@ -397,11 +389,7 @@ def manipulation(df, original, i):
                     for v in v2:
                         grupo = pm4py.filter_trace_attribute_values(df, atr, [v])
                         if(len(grupo)!=0):
-                            if(key==""):
-                                filtered_dataframe[str([v])] = grupo
-                            else:
-                                filtered_dataframe[key + " - " + str([v])] = grupo
-                            # filtered_dataframe[v] = grupo
+                            filtered_dataframe[v] = grupo
                 # st.write(v1, v2)
                 else:
                     grupo = pm4py.filter_trace_attribute_values(df, atr, v2)
@@ -409,73 +397,57 @@ def manipulation(df, original, i):
                         if(key==""):
                             filtered_dataframe[str(v2)] = grupo
                         else:
-                            filtered_dataframe[key + " - " + str(v2)] = grupo
+                            filtered_dataframe[key + " ; " + str(v2)] = grupo
                         
 
         elif ftype == 'Keep Selected':
             g = v1[1]
             atr = v1[0] 
             
-            if v2 == ['*']:  
+            if v2 == ['* All values']:  
                 valores = df[atr].unique()
                 for v in valores:
                     grupo = df[df[atr]==v]
                     if(len(grupo)!=0):
-                        if(key==""):
-                            filtered_dataframe[str([v])] = grupo
-                        else:
-                            filtered_dataframe[key + " - " + str([v])] = grupo
-                        # filtered_dataframe[v] = grupo
+                        filtered_dataframe[v] = grupo
             else:   
                 if(g==True):
                     valores = df[atr].unique()
                     for v in v2:
                         grupo = df[df[atr]==v]
                         if(len(grupo)!=0):
-                            # filtered_dataframe[v] = grupo
-                            if(key==""):
-                                filtered_dataframe[str([v])] = grupo
-                            else:
-                                filtered_dataframe[key + " - " + str([v])] = grupo
+                            filtered_dataframe[v] = grupo
                 else:                    
                     grupo = pm4py.filter_event_attribute_values(df, atr, v2,  level='event')
                     if(len(grupo)!=0):
                         if(key==""):
                             filtered_dataframe[str(v2)] = grupo
                         else:
-                            filtered_dataframe[key + " - " + str(v2)] = grupo
+                            filtered_dataframe[key + " ; " + str(v2)] = grupo
 
         elif ftype == 'Forbidden':   
             g = v1[1] 
             atr = v1[0] 
             
-            if v2 == ['*']: 
+            if v2 == ['* All values']: 
                 valores = df[atr].unique()
                 for v in valores:
                     grupo = pm4py.filter_trace_attribute_values(df, atr, [v], retain=False)
                     if(len(grupo)!=0):
-                        if(key==""):
-                            filtered_dataframe[str([v])] = grupo
-                        else:
-                            filtered_dataframe[key + " - " + str([v])] = grupo
-                        # filtered_dataframe[v] = grupo
+                        filtered_dataframe[v] = grupo
             else:       
                 if(g==True):
                     for v in v2:
                         grupo = pm4py.filter_trace_attribute_values(df, atr, [v], retain=False)
                         if(len(grupo)!=0):
-                            if(key==""):
-                                filtered_dataframe[str([v])] = grupo
-                            else:
-                                filtered_dataframe[key + " - " + str([v])] = grupo
-                            # filtered_dataframe[v] = grupo
+                            filtered_dataframe[v] = grupo
                 else:
                     grupo = pm4py.filter_trace_attribute_values(df, atr, v2, retain=False)
                     if(len(grupo)!=0):
                         if(key==""):
                             filtered_dataframe[str(v2)] = grupo
                         else:
-                            filtered_dataframe[key + " - " + str(v2)] = grupo
+                            filtered_dataframe[key + " ; " + str(v2)] = grupo
 
         elif ftype == 'Rework':
             # log = check_log(df)
@@ -489,14 +461,14 @@ def manipulation(df, original, i):
             log_start = pm4py.get_start_activities(df)
             log_end = pm4py.get_end_activities(df)
 
-            if (v1 == ['*'] and v2 == []):
+            if (v1 == ['* All values'] and v2 == []):
                 for a in log_start:
                     grupo = pm4py.filter_start_activities(df, [a])
                     # grupo = pm4py.convert_to_dataframe(filtered_log)
                     if(len(grupo)!=0):
                         filtered_dataframe[a + ' - ' + 'endpoints'] = grupo
 
-            elif (v1 == ['*'] and v2 == ['*']):
+            elif (v1 == ['* All values'] and v2 == ['* All values']):
                 for a in log_start:
                     for e in log_end:
                         filtered_log = pm4py.filter_start_activities(df, [a])
@@ -505,7 +477,7 @@ def manipulation(df, original, i):
                         if(len(grupo)!=0):
                             filtered_dataframe[a + ' - ' + e] = grupo
             
-            elif (v1 == ['*'] and v2 != []):
+            elif (v1 == ['* All values'] and v2 != []):
                 for a in log_start:
                     filtered_log = pm4py.filter_start_activities(df, [a])
                     grupo = pm4py.filter_end_activities(filtered_log, v2)
@@ -513,7 +485,7 @@ def manipulation(df, original, i):
                     if(len(grupo)!=0):
                         filtered_dataframe[a + ' - ' + str(v2)] = grupo
 
-            elif (v1 != [] and v2 == ['*']):
+            elif (v1 != [] and v2 == ['* All values']):
                 for e in log_end:
                     filtered_log = pm4py.filter_end_activities(df, [e])
                     grupo = pm4py.filter_start_activities(filtered_log, v1)
@@ -521,7 +493,7 @@ def manipulation(df, original, i):
                     if(len(grupo)!=0):
                         filtered_dataframe[str(v1) + ' - ' + e] = grupo
 
-            elif (v1 == [] and v2 == ['*']):
+            elif (v1 == [] and v2 == ['* All values']):
                 for e in log_end:
                     grupo = pm4py.filter_end_activities(df, [e])
                     # grupo = pm4py.convert_to_dataframe(filtered_log)
@@ -876,12 +848,15 @@ def returnMaxRepititionsEdges(df):
 # dataframe = cargar_datos()
 
 if 'original' not in st.session_state:
+
+    log_prueba = pm4py.read_xes("datasets/BPI_Challenge_2019.xes")
+    df_prueba = pm4py.convert_to_dataframe(log_prueba)
+    df_prueba.to_csv('BPIC2019.csv', index=False)
+    st.dataframe(df_prueba)
+
+
     st.session_state.original = pd.DataFrame()
     st.markdown(" ##### **Please, upload the event log in _Upload file_.** ")
-    # upload_dataset = st.button("Go!")
-    # if upload_dataset:
-    #     switch_page("3_Upload_file")
-    # st.button(page="3_Upload_file")
 
 
 
@@ -895,7 +870,7 @@ if len(st.session_state.original):
 
     if dataframe is not None:
 
-        if st.checkbox('Show original event log'):
+        if st.checkbox('Show Event log'):
             dataframe
 
         atributos = dataframe.columns.tolist()

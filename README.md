@@ -1,8 +1,8 @@
-# VISCoDFG:  A Tool for Visual Insights Search from Collections of Directly-Follows Graphs
+# VISCoPro:  A Tool for Visual Insights Search from Collections of Directly-Follows Graphs
 
 Process mining is a discipline that enables the analysis of business processes from event logs. The Directly-Follows Graph (DFG) is one of the most used visualization types employed in this domain. However, the extraction of valuable information from DFGs requires significant manual effort from users due to the limitations of current process mining tools. To address this challenge, we propose VISCoDFG, a visual query tool designed to ease the manipulation of event logs and the management of DFG collections. The system allows users to query these DFGs to uncover significant insights efficiently. The tool proposed has been developed with Streamlit (https://streamlit.io/), which is a framework that enables the conversion of data Python scripts into shareable web applications.
 
-VISCoDFG is available at https://viscodfg.streamlit.app/.
+VISCoPro is available at https://viscodfg.streamlit.app/.
 
 ### Use case: Find bottlenecks in the process 
 

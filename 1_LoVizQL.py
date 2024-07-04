@@ -792,8 +792,10 @@ def threshold(datos, metric, a, p, nodes):
 
             dfg_visualizer.save(gviz, './figures/dfg' + str(ident) + '.png')
             st.write(str(key))
-            st.image( './figures/dfg' + str(ident) + 'png')
+            st.image( './figures/dfg' + str(ident) + '.png')
             ident = ident + 1
+
+            
 
 def removeEdges(G,filteredEdges):
     for edge in list(G.edges):

@@ -39,7 +39,7 @@ from itertools import combinations
 
 
 
-st.set_page_config(page_title="Pattern recommendation")
+# st.set_page_config(page_title="Pattern recommendation")
 
 st.title("VISCoPro")
 

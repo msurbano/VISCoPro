@@ -38,7 +38,7 @@ from itertools import combinations
 
 
 
-st.set_page_config(page_title="Pattern specification")
+# st.set_page_config(page_title="Pattern specification")
 
 st.title("VISCoPro")
 maxt = 0

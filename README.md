@@ -18,7 +18,7 @@ We focused on searchinf for bottlenecks in the process since it is one of the mo
 
 ![image](https://github.com/msurbano/VISCoPro/assets/92515344/4836934d-bca5-450c-b4f4-7245afb692b1)
 
-3. Next we go to the ***Context creation*** page where we can define the context of the data. 
+3. Next we go to the ***Data context*** page where we can define the context of the data. 
 
 ![image](https://github.com/msurbano/VISCoPro/assets/92515344/8ba9961c-2858-4b08-840a-d14c1f8e9bb6)
 
@@ -38,9 +38,7 @@ We focused on searchinf for bottlenecks in the process since it is one of the mo
 
 ![image](https://github.com/msurbano/VISCoPro/assets/92515344/35a66402-31cd-4410-8c98-e85942fbd2ad)
 
-8. In addition to the data flow, if we want to know in which type of document this bottleneck occurs, we can add this grouping to the Data Context page by adding a new manipulation action (*+ Number of manipulation actions*).
-
-9. In addition to the data flow, if we want to know in which type of document this bottleneck occurs, we can add this grouping on the ***Data Context*** page by adding a new manipulation action (*+ Number of manipulation actions*) to group by all values of the *case:Document Type* attribute. In this way, we obtain all the possible pairs of combinations between the two attributes (*case:Item Category* and *case:Document Type*).
+8. In addition to the data flow, if we want to know in which type of document this bottleneck occurs, we can add this grouping on the ***Data Context*** page by adding a new manipulation action (*+ Number of manipulation actions*) to group by all values of the *case:Document Type* attribute. In this way, we obtain all the possible pairs of combinations between the two attributes (*case:Item Category* and *case:Document Type*).
 
 ![image](https://github.com/msurbano/VISCoPro/assets/92515344/66de6829-3d16-44e6-9551-aa2216898ba6)
 

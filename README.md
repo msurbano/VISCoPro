@@ -50,7 +50,8 @@ We focused on searchinf for bottlenecks in the process since it is one of the mo
 
 10. If we zoom in on this DFG, we can see how this delay occurs between activities *Record Invoice Receipt* and *Clear Invoice*, whose duration is about 1 month.
 
-![image](https://github.com/msurbano/VISCoPro/assets/92515344/f2e0c03f-a432-4cc8-a598-46f408d00e7e)
+![image](https://github.com/msurbano/VISCoPro/assets/92515344/23488f80-2f7c-4f87-a8c7-d8003f148e29)
+
 
 
 

@@ -34,7 +34,7 @@ We focused on finding bottlenecks in the process, as this is one of the most stu
 
 ![image](https://github.com/msurbano/VISCoPro/assets/92515344/4cca2cc8-af59-4da8-9be6-cddd7d45da12)
 
-7. We access the ***Pattern Specification page*** where the system provides a set of objectives and we select that we are interested in Identifying activities as bottlenecks. Furthermore, we customize the criteria by which the results will be obtained, indicating that we want to identify those DFGs that contain the activity execution with the longest duration of the entire process. The biggest delay in the process is in data flow *3-way match, invoice before GR*.
+7. We access the ***Pattern Specification*** page where the system provides a set of objectives and we select that we are interested in Identifying activities as bottlenecks. Furthermore, we customize the criteria by which the results will be obtained, indicating that we want to identify those DFGs that contain the activity execution with the longest duration of the entire process. The biggest delay in the process is in data flow *3-way match, invoice before GR*.
 
 ![image](https://github.com/msurbano/VISCoPro/assets/92515344/35a66402-31cd-4410-8c98-e85942fbd2ad)
 

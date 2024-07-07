@@ -3,6 +3,7 @@ import pandas as pd
 from io import StringIO
 
 st.title("VISCoPro")
+st.markdown("""---""")
 
 if 'original' not in st.session_state:
     st.session_state.original = pd.DataFrame()

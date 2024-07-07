@@ -42,6 +42,7 @@ from itertools import combinations
 # st.set_page_config(page_title="Pattern recommendation")
 
 st.title("VISCoPro")
+st.markdown("""---""")
 
 # st.markdown("# Pattern recommendation 🎉")
 # st.sidebar.markdown("# Pattern recommendation 🎉")

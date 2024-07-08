@@ -6,7 +6,7 @@ VISCoPro is available at https://viscopro.streamlit.app/.
 
 ### Use case: Find bottlenecks in the process 
 
-Data source: Business Process Intelligence Challenge 2019 Event Log (https://icpmconference.org/2019/icpm-2019/contests-challenges/bpi-challenge-2019/). In this BPI Challenge, there is data from a large multinational company operating from the Netherlands in the field of paints and coatings. Specifically, the event log contains information about the purchasing document management process and four types of data flows. This subset of data contains 318272 events, 50000 traces and 21 attributes.
+Data source: Business Process Intelligence Challenge 2019 Event Log (https://icpmconference.org/2019/icpm-2019/contests-challenges/bpi-challenge-2019/). In this BPI Challenge, there is data from a large multinational company operating from the Netherlands in the field of paints and coatings. Specifically, the event log contains information about the purchasing document management process and four types of data flows. Due to the large size of this dataset, we selected only a subset of cases from this event dataset for the use case, considering only the central cases with less noise. This subset of data contains 50.000 traces, 318.272 events, and 21 attributes.
   
 We focused on finding bottlenecks in the process, as this is one of the most studied analysis objectives in process time performance analysis.
 

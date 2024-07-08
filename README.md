@@ -44,11 +44,11 @@ We focused on finding bottlenecks in the process, as this is one of the most stu
 
 9. Finally, if we go back to the ***Pattern Specification*** page, we can see how the execution of the activity with the longest duration is in data flow *3-way match, invoice before GR*, specifically in document type *Standard PO*.
 
-![image](https://github.com/msurbano/VISCoPro/assets/92515344/fd63e9b8-bfbb-4486-b582-db23abfa1640)
+![image](https://github.com/msurbano/VISCoPro/assets/92515344/256f15ea-c973-4d30-ae5d-71775ec41c31)
 
-10. If we zoom in on this DFG, we can see how this delay occurs between activities *Record Invoice Receipt* and *Clear Invoice*, whose duration is about 1 month.
+10. If we zoom in on this DFG, we can see how this delay occurs between activities *Vendor Creates Invoice* and *Create Purchase Order Item*, whose duration is about 7 months.
 
-![image](https://github.com/msurbano/VISCoPro/assets/92515344/23488f80-2f7c-4f87-a8c7-d8003f148e29)
+![image](https://github.com/msurbano/VISCoPro/assets/92515344/55947a9e-5d77-480f-9913-5742e102fcf8)
 
 Furthermore, a video tutorial for this use case is accessible at ...
 

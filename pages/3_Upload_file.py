@@ -47,8 +47,8 @@ if uploaded_file:
     st.write('Original event log')
     st.dataframe(df)
     
-    st.markdown('##### 1. Next go to the _LoVizQL_ main page to define the context of the data. ')
-    st.markdown('##### 2. Once the data context is defined, you can access _Pattern recommendation_ or _Pattern seacrh_ to obtain recommendations.')
+    # st.markdown('##### 1. Next go to the _LoVizQL_ main page to define the context of the data. ')
+    # st.markdown('##### 2. Once the data context is defined, you can access _Pattern recommendation_ or _Pattern seacrh_ to obtain recommendations.')
 
     
 

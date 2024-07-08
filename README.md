@@ -51,15 +51,3 @@ We focused on finding bottlenecks in the process, as this is one of the most stu
 ![image](https://github.com/msurbano/VISCoPro/assets/92515344/55947a9e-5d77-480f-9913-5742e102fcf8)
 
 Furthermore, a video tutorial for this use case is accessible at ...
-
-
-
-
-
-
-
-
-
-
-
-

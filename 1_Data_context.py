@@ -117,7 +117,8 @@ if "input_values" not in st.session_state:
 # Manipulation  
 def manipulation(df, original, i): 
     st.write(i)
-    st.write(st.session_state)
+    st.write(st.session_state["filter_type_group"])
+    st.write(st.session_state["filter_types"])
     # log = check_log(df)
 
     ft_group = st.sidebar.selectbox('Filter type', ('Attribute', 'Performance', 'Follower', 'Timeframe', 'Rework', 'Endpoints'),

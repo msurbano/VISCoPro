@@ -5,6 +5,9 @@ import pm4py
 import copy
 import deprecation
 import os
+import cairosvg
+from PIL import Image
+import svgwrite
 from pm4py.objects.log.importer.xes import importer as xes_importer
 from pm4py.algo.discovery.dfg import algorithm as dfg_discovery
 from pm4py.algo.transformation.log_to_features import algorithm as log_to_features
@@ -28,13 +31,13 @@ import re
 # import datetime
 from datetime import date, time, datetime
 from pm4py.visualization.dfg.variants.frequency import apply
+from pm4py.visualization.dfg.variants import performance
 import warnings
 warnings.filterwarnings("ignore")
 import time
 from datetime import datetime
 from PIL import Image
 from io import StringIO
-from pm4py.visualization.dfg.variants.frequency import apply
 from pm4py.visualization.dfg import visualizer as dfg_visualizer
 from streamlit import session_state as ss
 
@@ -116,61 +119,45 @@ if "input_values" not in st.session_state:
 
 # Manipulation  
 def manipulation(df, original, i): 
-    st.write(i)
-    st.write(st.session_state["filter_type_group"])
-    st.write(st.session_state["filter_types"])
-    # log = check_log(df)
 
-    ft_group = st.sidebar.selectbox('Filter type', ('Attribute', 'Performance', 'Follower', 'Timeframe', 'Rework', 'Endpoints'),
-         key='ft_group_%s' % i)
+    ft_group = st.sidebar.selectbox('Filter type', ('Attribute', 'Performance', 'Follower', 'Timeframe', 'Rework', 'Endpoints'), key='ft_group_%s' % i)
 
     st.session_state["filter_type_group"]['ft_group_%s' % i] = ft_group
 
     filters1 = ("Mandatory", "Forbidden", "Keep Selected")
-
     filters2 = ('Path performance', "Case performance")
-
     filters3 = ("Directly Followed", "Eventually Followed", "Keep Selected Fragments")
 
-    # filters = ("Mandatory", "Forbidden", "Keep Selected", 
-    #        "Directly Followed", "Eventually Followed", "Keep Selected Fragments", 
-    #        'Timeframe','Path performance', "Case performance", 'Endpoints', 'Rework')
-
     if(ft_group == 'Attribute'):
-        ft = st.sidebar.selectbox('Filter mode', 
-            filters1,  index=filters1.index(st.session_state["filter_types"].get('ft_%s' % i, filters1[0])), key='ft_%s' % i)
-    
-        # default_value = st.session_state["filter_types"].get('ft_%s' % i, filters1[0])
-        # # Asegurarse de que el valor predeterminado esté en filters1
-        # if default_value not in filters1:
-        #     default_value = filters1[0]
-
-        # ft = st.sidebar.selectbox('Filter mode', filters1, index=filters1.index(default_value), key='ft_%s' % i)
-        # st.session_state["filter_types"]['ft_%s' % i] = ft
+        default_value = st.session_state["filter_types"].get('ft_%s' % i, filters1[0])
+        # Asegurarse de que el valor predeterminado esté en filters1
+        if default_value not in filters1:
+            default_value = filters1[0]
+        ft = st.sidebar.selectbox('Filter mode', filters1, index=filters1.index(default_value), key='ft_%s' % i)
 
     elif(ft_group == 'Performance'):
-        ft = st.sidebar.selectbox('Filter mode', 
-            filters2,  index=filters2.index(st.session_state["filter_types"].get('ft_%s' % i, filters2[0])), key='ft_%s' % i)
-    
+        default_value = st.session_state["filter_types"].get('ft_%s' % i, filters2[0])
+        # Asegurarse de que el valor predeterminado esté en filters2
+        if default_value not in filters2:
+            default_value = filters2[0]
+        ft = st.sidebar.selectbox('Filter mode', filters2, index=filters2.index(default_value), key='ft_%s' % i)
+
     elif(ft_group == 'Follower'):
-        ft = st.sidebar.selectbox('Filter mode', 
-            filters3,  index=filters3.index(st.session_state["filter_types"].get('ft_%s' % i, filters3[0])), key='ft_%s' % i)
+        default_value = st.session_state["filter_types"].get('ft_%s' % i, filters3[0])
+        # Asegurarse de que el valor predeterminado esté en filters3
+        if default_value not in filters3:
+            default_value = filters3[0]
+        ft = st.sidebar.selectbox('Filter mode', filters3, index=filters3.index(default_value), key='ft_%s' % i)
 
     else:
         ft = ft_group
-    
-    
-    # ft = st.sidebar.selectbox('Filter type', 
-    #         filters,  index=filters.index(st.session_state["filter_types"].get('ft_%s' % i, filters[0])), key='ft_%s' % i)
 
     st.session_state["filter_types"]['ft_%s' % i] = ft
 
-
     # Texto pequeño
     def small_text(text):
-        return f"<p style='font-size:11px; color:{'grey'}; font-style:{'italic'}; '>{text}</p>"
-    
-    
+        return f"<p style='font-size:11px; color:grey; font-style:italic;'>{text}</p>"
+
     if(ft in ("Mandatory", "Forbidden", "Keep Selected")):
         if(ft == 'Mandatory'):
             st.sidebar.markdown(small_text("This filter removes all cases that do not have at least one event with one of the selected values."), unsafe_allow_html=True)
@@ -180,23 +167,44 @@ def manipulation(df, original, i):
             st.sidebar.markdown(small_text("This filter removes all events that do not have one of the selected values."), unsafe_allow_html=True)
 
 
-        at = st.sidebar.selectbox('Attribute',
-                    (original.columns), 
-                    index=original.columns.get_loc(st.session_state["attribute"].get('at_%s' % i, original.columns[0])), 
-                    key='at_%s' % i)
+        at = st.sidebar.selectbox('Attribute', (original.columns), 
+                                index=original.columns.get_loc(st.session_state["attribute"].get('at_%s' % i, original.columns[0])), 
+                                key='at_%s' % i)
+
+        st.session_state["attribute"]['at_%s' % i] = at
+
+        # Obtener valores únicos para el atributo seleccionado
+        valores = original[at].unique()
+
+        # Filtrar los valores predeterminados para asegurarse de que son válidos
+        default_values = st.session_state["values"].get('value_%s' % i, [])
+        valid_default_values = [value for value in default_values if value in valores]
+
+        value = st.sidebar.multiselect('Value', (['* All values'] + list(valores)), key='value_%s' % i, default=valid_default_values)
+        st.session_state["values"]['value_%s' % i] = value
 
         g = st.sidebar.checkbox('Group by', key='g_%s' % i)
         st.session_state["grupo"]['g_%s' % i] = g
 
-        st.session_state["attribute"]['at_%s' % i] = at
-                
-        valores = original[at].unique()
-              
-        # value = st.sidebar.multiselect('Value', (['*'] + list(valores) ), key='value_%s' % i)
-        value = st.sidebar.multiselect('Value', (['* All values'] + list(valores)), key='value_%s' % i, default=st.session_state["values"].get('value_%s' % i, []))
-        st.session_state["values"]['value_%s' % i] = value
+        manip = [ft, (at, g), value]
 
-        manip = [ft,(at,g),value]
+
+        # at = st.sidebar.selectbox('Attribute', (original.columns), 
+        #                         index=original.columns.get_loc(st.session_state["attribute"].get('at_%s' % i, original.columns[0])), 
+        #                         key='at_%s' % i)
+
+        # g = st.sidebar.checkbox('Group by', key='g_%s' % i)
+        # st.session_state["grupo"]['g_%s' % i] = g
+
+        # st.session_state["attribute"]['at_%s' % i] = at
+
+        # valores = original[at].unique()
+
+        # value = st.sidebar.multiselect('Value', (['* All values'] + list(valores)), key='value_%s' % i, default=st.session_state["values"].get('value_%s' % i, []))
+        # st.session_state["values"]['value_%s' % i] = value
+
+        # manip = [ft, (at, g), value]
+
 
         # st.write(manip)
 
@@ -653,7 +661,7 @@ def defineGraphFrequency(df, dfg, nodes, metric):
     # max_rep, case_freq, total_repetitions = returnEdgesInfo(df,nodes,'case:concept:name','time:timestamp')
     if(metric in ['Case Frequency', 'Max Repetitions', 'Total Repetitions']):
         res = returnEdgesInfo(df,nodes,'case:concept:name','time:timestamp', metric)
-        st.write('4.1) returnEdgesInfo hecho')
+        # st.write('4.1) returnEdgesInfo hecho')
 
     for key in dfg.keys():  
         # st.write(key)          
@@ -763,10 +771,23 @@ def threshold(datos, metric, a, p, nodes):
 
 
             measure=translater[metric]
-            pm4py.save_vis_performance_dfg(dfg['dfg'],dfg['sa'],dfg['ea'], './figures/dfg' + str(ident) + '.png', aggregation_measure=measure)
+
+
+            pm4py.save_vis_performance_dfg(dfg['dfg'],dfg['sa'],dfg['ea'], './figures/dfg' + str(ident) + '.svg', aggregation_measure=measure)
             
             st.write(str(key))
-            st.image('./figures/dfg' + str(ident) + '.png')
+
+            # st.image('./figures/dfg' + str(ident) + '.svg')
+            with open('./figures/dfg' + str(ident) + '.svg', 'r', encoding='utf-8') as file:
+                svg_data = file.read()
+                st.image(svg_data)
+
+            # Mostrar el SVG utilizando HTML
+            # st.markdown(f'<div>{svg_data}</div>', unsafe_allow_html=True)
+            # svg_html = f'<div style="width: 400px; max-width: 100%;">{svg_data}</div>'
+
+            # st.markdown(svg_html, unsafe_allow_html=True)
+
             ident = ident + 1
 
         else:
@@ -800,26 +821,10 @@ def threshold(datos, metric, a, p, nodes):
             dfg_custom={(edge[0],edge[1]):edge[2][measure] for edge in list_edges}
 
             gviz=apply(dfg_custom,None,None,metric_nodes,None)
-
-            # svg_path = f'./figures/dfg{ident}.svg'
-            # dfg_visualizer.save(gviz, svg_path)
-
-            # try:
-            #     with open(svg_path, 'r', encoding='utf-8') as file:
-            #         svg_content = file.read()
-
-            #     # Mostrar el identificador y la imagen SVG en Streamlit
-            #     st.write(str(key))
-            #     st.markdown(f'<div>{svg_content}</div>', unsafe_allow_html=True)
-
-            #     ident += 1
-            # except Exception as e:
-            #     st.error(f"Error al leer el archivo SVG: {e}")
-
-
-            dfg_visualizer.save(gviz, './figures/dfg' + str(ident) + '.png')
             st.write(str(key))
-            st.image( './figures/dfg' + str(ident) + '.png')
+            st.write(gviz)         
+
+
             ident = ident + 1
 
             

@@ -7,7 +7,7 @@ import deprecation
 import os
 # import cairosvg
 from PIL import Image
-import svgwrite
+# import svgwrite
 from pm4py.objects.log.importer.xes import importer as xes_importer
 from pm4py.algo.discovery.dfg import algorithm as dfg_discovery
 from pm4py.algo.transformation.log_to_features import algorithm as log_to_features

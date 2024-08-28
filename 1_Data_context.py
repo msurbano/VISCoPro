@@ -5,7 +5,7 @@ import pm4py
 import copy
 import deprecation
 import os
-import cairosvg
+# import cairosvg
 from PIL import Image
 import svgwrite
 from pm4py.objects.log.importer.xes import importer as xes_importer

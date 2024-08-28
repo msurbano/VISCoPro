@@ -37,12 +37,7 @@ from collections import Counter
 from itertools import combinations
 
 
-
-
-# st.set_page_config(page_title="Pattern recommendation")
-
-st.title("VISCoPro")
-st.markdown("""---""")
+st.set_page_config(page_title="Pattern recommendation")
 
 # st.markdown("# Pattern recommendation 🎉")
 # st.sidebar.markdown("# Pattern recommendation 🎉")
@@ -167,7 +162,7 @@ def infreqact(expr, dic):
             
             # key = 'Infreq. activities (min. freq. ' + str(minimo) + ') - ' + key 
             prueba[key] = datos 
-
+    # st.write(prueba)
     return prueba
  
 def mostfreqact(expr, dic):
@@ -217,7 +212,7 @@ def transbot(expr, dic):
     m = maximo / 60
     
 
-    st.markdown(f" **{expr}** **(Max. CT: {int(m)} minutes)**")
+    st.markdown(f" **{expr}** **(Max. CT: {int(m)} minutes ~ {int(m/1440)} days)**")
 
     for i, (key, grafo) in enumerate(grafos_maximos, start=1):
         # nueva_clave = f"{key}_{i}"  # Construye una nueva clave única añadiendo un sufijo numérico
@@ -384,7 +379,7 @@ def percentageReworkPerActivityDFG(graph):
 
 def threshold(datos, metric, a, p, nodes):
     dic={}
-    
+    ident = 0
     for key, dfg in datos.items():
         df = dfg['df']
         dfg_ini = dfg['dfg']
@@ -412,10 +407,24 @@ def threshold(datos, metric, a, p, nodes):
 
 
             measure=translater[metric]
-            pm4py.save_vis_performance_dfg(dfg['dfg'],dfg['sa'],dfg['ea'], './figures/dfg' + key + '.png', aggregation_measure=measure)
+
+
+            pm4py.save_vis_performance_dfg(dfg['dfg'],dfg['sa'],dfg['ea'], './figures/dfg' + str(ident) + '.svg', aggregation_measure=measure)
             
             st.write(str(key))
-            st.image('./figures/dfg' + key + '.png')
+
+            # st.write('./figures/dfg' + str(ident) + '.svg')
+            with open('./figures/dfg' + str(ident) + '.svg', 'r', encoding='utf-8') as file:
+                svg_data = file.read()
+                st.image(svg_data)
+
+            # Mostrar el SVG utilizando HTML
+            # st.markdown(f'<div>{svg_data}</div>', unsafe_allow_html=True)
+            # svg_html = f'<div style="width: 400px; max-width: 100%;">{svg_data}</div>'
+
+            # st.markdown(svg_html, unsafe_allow_html=True)
+
+            ident = ident + 1
 
         else:
             translater={"Absolute Frequency":"abs_freq","Case Frequency":"case_freq",
@@ -423,7 +432,7 @@ def threshold(datos, metric, a, p, nodes):
                 "total_repetitions"}
 
 
-            ac = dict(df[nodes].value_counts())            
+            ac = dict(df[nodes].value_counts())
 
             if(p==100 and a==100):
                 dfg_path = dfg_ini
@@ -434,7 +443,6 @@ def threshold(datos, metric, a, p, nodes):
             else:
                 dfg_act, sa, ea, ac = dfg_filtering.filter_dfg_on_activities_percentage(dfg['dfg'], dfg['sa'], dfg['ea'], ac, a/100)
                 dfg_path, sa, ea, ac = dfg_filtering.filter_dfg_on_paths_percentage(dfg_act, sa, ea, ac, p/100)
-
 
             G = dfg['graph']
             
@@ -449,11 +457,12 @@ def threshold(datos, metric, a, p, nodes):
             dfg_custom={(edge[0],edge[1]):edge[2][measure] for edge in list_edges}
 
             gviz=apply(dfg_custom,None,None,metric_nodes,None)
-
-            dfg_visualizer.save(gviz, './figures/dfg' + key + '.png')
-
             st.write(str(key))
-            st.image( './figures/dfg' + key + '.png')
+            st.write(gviz)         
+
+
+            ident = ident + 1
+
 
 def removeEdges(G,filteredEdges):
     for edge in list(G.edges):

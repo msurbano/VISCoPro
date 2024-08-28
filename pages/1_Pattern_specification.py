@@ -36,11 +36,8 @@ from pm4py.visualization.dfg import visualizer as dfg_visualizer
 from collections import Counter
 from itertools import combinations
 
+st.set_page_config(page_title="Pattern specification")
 
-
-# st.set_page_config(page_title="Pattern specification")
-
-st.title("VISCoPro")
 maxt = 0
 
 # st.markdown("# Pattern specification ❄️")
@@ -58,7 +55,7 @@ def function(graph, expr, paramF, inicial, measure):
     elif(expr== 'percentageReworkPerActivity'):
         return percentageReworkPerActivityDFG(graph)
 
-    elif(expr == 'Identify DFGs by the number of unique activities'):
+    elif(expr == 'Identify DFGs by the number of unique nodes'):
         return uniqueActivitiesDFG(graph, paramF)
 
     elif (expr == 'Identify DFGs by the number of unique resources'):
@@ -106,10 +103,26 @@ def function(graph, expr, paramF, inicial, measure):
 def uniqueActivitiesDFG(dic, param):
     # st.write('n nodos de cada grafo', len(graph.nodes))
     prueba = {}
+
+    min_nodos = min(len(datos['graph'].nodes) for datos in dic.values())
+    max_nodos = max(len(datos['graph'].nodes) for datos in dic.values())
+
     for key, datos in dic.items():
         graph = datos['graph']
-        if(len(graph.nodes) >= param):
-            prueba[key] = datos
+
+        if param == 'Minimum number of nodes':
+            if len(graph.nodes) <= min_nodos:
+                prueba[key] = datos
+                st.markdown(f" **(Min. nodes: {min_nodos})**")
+
+        elif param == 'Maximum number of nodes':
+            if len(graph.nodes) >= max_nodos:
+                st.markdown(f" **(Max. nodes: {max_nodos})**")
+                prueba[key] = datos
+        else:
+            if(len(graph.nodes) >= param):
+                prueba[key] = datos
+
     return prueba
 
 def infreqact(dic, param, measure):
@@ -339,9 +352,11 @@ def resourbot(dic, param, inicial, measure):
     
     return prueba
 
+         
+
 def threshold(datos, metric, a, p, nodes):
     dic={}
-    
+    ident = 0
     for key, dfg in datos.items():
         df = dfg['df']
         dfg_ini = dfg['dfg']
@@ -369,10 +384,24 @@ def threshold(datos, metric, a, p, nodes):
 
 
             measure=translater[metric]
-            pm4py.save_vis_performance_dfg(dfg['dfg'],dfg['sa'],dfg['ea'], './figures/dfg' + key + '.png', aggregation_measure=measure)
+
+
+            pm4py.save_vis_performance_dfg(dfg['dfg'],dfg['sa'],dfg['ea'], './figures/dfg' + str(ident) + '.svg', aggregation_measure=measure)
             
             st.write(str(key))
-            st.image('./figures/dfg' + key + '.png')
+
+            # st.image('./figures/dfg' + str(ident) + '.svg')
+            with open('./figures/dfg' + str(ident) + '.svg', 'r', encoding='utf-8') as file:
+                svg_data = file.read()
+                st.image(svg_data)
+
+            # Mostrar el SVG utilizando HTML
+            # st.markdown(f'<div>{svg_data}</div>', unsafe_allow_html=True)
+            # svg_html = f'<div style="width: 400px; max-width: 100%;">{svg_data}</div>'
+
+            # st.markdown(svg_html, unsafe_allow_html=True)
+
+            ident = ident + 1
 
         else:
             translater={"Absolute Frequency":"abs_freq","Case Frequency":"case_freq",
@@ -380,7 +409,7 @@ def threshold(datos, metric, a, p, nodes):
                 "total_repetitions"}
 
 
-            ac = dict(df[nodes].value_counts())            
+            ac = dict(df[nodes].value_counts())
 
             if(p==100 and a==100):
                 dfg_path = dfg_ini
@@ -391,7 +420,6 @@ def threshold(datos, metric, a, p, nodes):
             else:
                 dfg_act, sa, ea, ac = dfg_filtering.filter_dfg_on_activities_percentage(dfg['dfg'], dfg['sa'], dfg['ea'], ac, a/100)
                 dfg_path, sa, ea, ac = dfg_filtering.filter_dfg_on_paths_percentage(dfg_act, sa, ea, ac, p/100)
-
 
             G = dfg['graph']
             
@@ -406,11 +434,12 @@ def threshold(datos, metric, a, p, nodes):
             dfg_custom={(edge[0],edge[1]):edge[2][measure] for edge in list_edges}
 
             gviz=apply(dfg_custom,None,None,metric_nodes,None)
-
-            dfg_visualizer.save(gviz, './figures/dfg' + key + '.png')
-
             st.write(str(key))
-            st.image( './figures/dfg' + key + '.png')
+            st.write(gviz)         
+
+
+            ident = ident + 1
+
 
 def removeEdges(G,filteredEdges):
     for edge in list(G.edges):
@@ -503,7 +532,7 @@ if len(st.session_state.dataframe):
         if metric in ['Mean CT', 'Median CT', 'StDev CT', 'Total CT']:  
             pattern = st.sidebar.selectbox(
                     'Pattern search',
-                    ('Identify DFGs by the number of unique activities', 
+                    ('Identify DFGs by the number of unique nodes', 
                     'Identify transitions with high duration',
                     'Identify activities with high duration',   # impememtado pero falta comprobar que existe tiempo asociado a actividades
                     'Identify transitions as bottlenecks',
@@ -513,7 +542,7 @@ if len(st.session_state.dataframe):
             pattern = st.sidebar.selectbox(
                     'Pattern search',
                     # ('Identify the most frequent fragment',
-                    ('Identify DFGs by the number of unique activities',  
+                    ('Identify DFGs by the number of unique nodes',  
                     'Identify infrequent activities',
                     'Identify the most frequent activities'))
 
@@ -535,7 +564,7 @@ if len(st.session_state.dataframe):
         if metric in ['Mean CT', 'Median CT', 'StDev CT', 'Total CT']:  
             pattern = st.sidebar.selectbox(
                 'Pattern search',
-                ('Identify DFGs by the number of unique activities', 
+                ('Identify DFGs by the number of unique nodes', 
                 'Identify transitions as bottlenecks',   
                 'Identify transitions with high duration',
                 'Identify activities with high duration',
@@ -543,15 +572,18 @@ if len(st.session_state.dataframe):
         else:
             pattern = st.sidebar.selectbox(
                 'Pattern search',
-                ('Identify DFGs by the number of unique activities',
+                ('Identify DFGs by the number of unique nodes',
                 'Identify infrequent activities',
                 'Identify the most frequent activities'))
 
 
     param = 0
     prueba = {}
-    if(pattern == 'Identify DFGs by the number of unique activities' or pattern == 'Identify DFGs by the number of unique resources'):
-        param = st.sidebar.number_input('Minimum number of nodes', step=1, min_value=0)
+    if(pattern == 'Identify DFGs by the number of unique nodes' or pattern == 'Identify DFGs by the number of unique resources'):
+        param = st.sidebar.selectbox('Number of nodes', 
+        ['Minimum number of nodes', "Maximum number of nodes", 'Other'])
+        if param == 'Other':
+            param = st.sidebar.number_input('More than X nodes:', step=1, min_value=0)
         
     # elif (pattern == 'Identify activities with high duration'): #solo es posible si hay tiempo de inicio y fin de actividades
     #     param = st.sidebar.number_input('Minimum minutes to consider an activity with high duration', step=1) 

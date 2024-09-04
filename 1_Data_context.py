@@ -1100,7 +1100,7 @@ if len(st.session_state.original):
 
         # st.sidebar.write('2) Datos manipulados')
 
-        if st.button('Generate DFGs collection'):
+        if st.button('Generate collection of DFGs'):
             st.markdown("""---""")
             
             # t = time.process_time()

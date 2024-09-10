@@ -49,8 +49,8 @@ pd.set_option("styler.render.max_elements", 2000000)
 st.title("VISCoPro")
 st.markdown("""---""")
 
-pm4py_version = pm4py.__version__
-st.write(f"La versión de pm4py instalada es: {pm4py_version}")
+# pm4py_version = pm4py.__version__
+# st.write(f"La versión de pm4py instalada es: {pm4py_version}")
 
 # Convertir timestamp a tipo date
 def convertir_a_fecha_hora(fecha_hora_str):

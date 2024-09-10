@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import pm4py
+pm4py_version = pm4py.__version__
 import copy
 import deprecation
 import os

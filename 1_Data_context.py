@@ -411,7 +411,7 @@ def manipulation(df, original, i):
                 filt = pm4py.filter_between(df, 
                     activityFROM,activityTO, activity_key='concept:name', 
                             case_id_key='case:concept:name', timestamp_key='time:timestamp')
-                st.write(filt)
+                # st.write(filt)
                 if(len(filt)!=0):
                     if(key==''):
                         filtered_dataframe[str(activityFROM) + " - " + str(activityTO)] = filt

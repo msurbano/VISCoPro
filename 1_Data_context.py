@@ -1020,10 +1020,17 @@ if len(st.session_state.original):
             dataframe
 
         atributos = dataframe.columns.tolist()
+        atributos2 = atributos.copy()
+
+        if 'concept:name' in atributos2:
+            atributos2.remove('concept:name')
+            atributos2.insert(0, 'concept:name')
+
 
         columnas_a_eliminar = ['case:concept:name', 'time:timestamp']
 
         for col in columnas_a_eliminar:
+            atributos2.remove(col)
             atributos.remove(col)
 
         
@@ -1036,8 +1043,8 @@ if len(st.session_state.original):
 
         ss["nodes"] = col1.selectbox(
                 'Nodes',
-                (atributos), 
-                index=atributos.index(st.session_state["nodes"]) if st.session_state["nodes"] in atributos else 0)
+                (atributos2), 
+                index=atributos2.index(st.session_state["nodes"]) if st.session_state["nodes"] in atributos2 else 0)
         
         nodes = ss["nodes"]
 

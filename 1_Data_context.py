@@ -1106,6 +1106,8 @@ if len(st.session_state.original):
             st.markdown("""---""")
             
             # t = time.process_time()
+            if (filtered == {}):
+                st.write('prueba')
             dfgs = df_to_dfg(filtered,nodes,metric)
             # elapsed_time = time.process_time() - t
             # st.write('df_to_dfg: ' + str(elapsed_time/60) + ' minutos')

@@ -44,11 +44,11 @@ if uploaded_file:
         if not pd.api.types.is_string_dtype(df['case:concept:name']):
             df['case:concept:name'] = df['case:concept:name'].astype(str)
 
-    st.write('Original event log')
+    st.write('Here you can explore the original event log:')
 
     st.dataframe(df)
     
-    st.markdown('##### 1. Next go to the _VISCoPro_ main page to define the context of the data. ')
+    st.markdown('##### 1. Next go to the _Data context_ page to define the context of the data. ')
     st.markdown('##### 2. Once the data context is defined, you can access _Pattern recommendation_ or _Pattern seacrh_ to obtain recommendations.')
 
     

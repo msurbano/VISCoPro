@@ -638,7 +638,7 @@ if len(st.session_state.dataframe):
 
         except Exception as e:
             # Mostrar un mensaje genérico al usuario en la interfaz de Streamlit
-            st.error("Oops! Algo salió mal. Por favor, intenta de nuevo.")
+            st.error("Please make sure to click on the Generate collection of DFGs button in Data Context page.")
             # Aquí puedes registrar el error detallado para depuración, si lo necesitas
             print(f"Error capturado: {str(e)}")
 

@@ -134,7 +134,7 @@ def maxuniqueActivitiesDFG(expr, dic):
 
     return prueba
 
-def infreqact(expr, dic):
+def infreqact(expr, dic, measure):
     # st.write('hola')
     prueba={}
     min_values = []
@@ -166,7 +166,7 @@ def infreqact(expr, dic):
     # st.write(prueba)
     return prueba
  
-def mostfreqact(expr, dic):
+def mostfreqact(expr, dic, measure):
     prueba={}
     maximo = 0
     maximos=[]

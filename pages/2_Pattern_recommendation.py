@@ -53,7 +53,7 @@ def search(expr, dic, inicial, measure):
         # function(dic,pattern, inicial, prueba)
     # return prueba
 
-    return function(dic,expr, inicial)
+    return function(dic,expr, inicial, measure)
     
 def function(graph, expr, inicial, measure):
     # if(expr == 'percentageReworkActivityPerEvents'):

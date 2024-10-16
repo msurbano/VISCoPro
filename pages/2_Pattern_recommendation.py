@@ -144,7 +144,7 @@ def infreqact(expr, dic, measure):
         graph = datos['graph']
         data = graph.nodes.data()
         st.write(data)
-        min_values.extend(heapq.nsmallest(1, (item[1]['measure'] for item in data)))
+        min_values.extend(heapq.nsmallest(1, (item[1][measure] for item in data)))
     
     # Ordenar los valores mínimos y tomar el menor de ellos
     min_values.sort()
@@ -157,7 +157,7 @@ def infreqact(expr, dic, measure):
         data = graph.nodes.data()
         
         # Filtrar los nodos que tienen una frecuencia menor o igual al mínimo
-        res = [node for node in data if node[1]['measure'] <= minimo]
+        res = [node for node in data if node[1][measure] <= minimo]
         
         if len(res) > 0:
             
@@ -173,7 +173,7 @@ def mostfreqact(expr, dic, measure):
     for key, datos in dic.items():
         graph = datos['graph']
         data = graph.nodes.data()
-        max2 = heapq.nlargest(1, (item[1]['measure'] for item in data))
+        max2 = heapq.nlargest(1, (item[1][measure] for item in data))
         maximos.extend(max2)
 
     lista_max = sorted(maximos, reverse=True)
@@ -185,7 +185,7 @@ def mostfreqact(expr, dic, measure):
         graph = datos['graph']
         data = graph.nodes.data()
         
-        res = [node for node in data if node[1]['measure'] >= valores_mas_altos] 
+        res = [node for node in data if node[1][measure] >= valores_mas_altos] 
         
         if(len(res)>0):
             # key = 'Most freq. activities (max. freq. ' + str(valores_mas_altos) + ') - ' + key 

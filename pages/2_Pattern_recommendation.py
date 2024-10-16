@@ -56,6 +56,7 @@ def search(expr, dic, inicial, measure):
     return function(dic,expr, inicial, measure)
     
 def function(graph, expr, inicial, measure):
+    st.write(measure)
     # if(expr == 'percentageReworkActivityPerEvents'):
     #     return percentageReworkPerActivityEventsDFG(graph)
     # elif(expr== 'percentageReworkPerActivity'):

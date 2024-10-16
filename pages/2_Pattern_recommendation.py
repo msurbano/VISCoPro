@@ -202,6 +202,7 @@ def transbot(expr, dic, measure):
         graph = datos['graph']
        
         data = graph.edges.data()
+        st.write(data)
         max2 = max(item[2][measure] for item in data)
         if max2 > maximo:
             

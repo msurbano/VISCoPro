@@ -1100,8 +1100,8 @@ if len(st.session_state.original):
     
                     filtered = manipulation(dataframe, original, cont)
                 except Exception as e:
-                    st.error(f"Error: {e}")
-                    raise
+                    st.error(f"Error")
+                    break
 
                 # filtered = manipulation(dataframe, original, cont)
                 dataframe = filtered
@@ -1111,29 +1111,46 @@ if len(st.session_state.original):
 
         if st.button('Generate collection of DFGs'):
 
-            try:
-                st.markdown("""---""")
-            
-                # t = time.process_time()
-                if (filtered == {}):
-                    st.error('No results (no event log subset matches the specified manipulation actions).')
-                dfgs = df_to_dfg(filtered,nodes,metric)
+            st.markdown("""---""")
+            # t = time.process_time()
+            if (filtered == {}):
+                st.error('No results (no event log subset matches the specified manipulation actions).')
+            dfgs = df_to_dfg(filtered,nodes,metric)
                 # elapsed_time = time.process_time() - t
                 # st.write('df_to_dfg: ' + str(elapsed_time/60) + ' minutos')
                 
-                st.session_state.dataframe = dfgs
-                copia_dict = copy.deepcopy(dfgs)
+            st.session_state.dataframe = dfgs
+            copia_dict = copy.deepcopy(dfgs)
 
                 # t = time.process_time()
-                threshold(copia_dict, metric, perc_act, perc_path, nodes)
+            threshold(copia_dict, metric, perc_act, perc_path, nodes)
                 # elapsed_time = time.process_time() - t
-                # st.write('threshold: ' + str(elapsed_time/60) + ' minutos')
+                # st.write('threshold: ' + str(elapsed_time/60) + ' minutos')   
 
-            except Exception as e:
-                # Mostrar un mensaje genérico al usuario en la interfaz de Streamlit
-                st.error("Error")
-                # Aquí puedes registrar el error detallado para depuración, si lo necesitas
-                print(f"Error capturado: {str(e)}")
+
+            # try:
+            #     st.markdown("""---""")
+            
+            #     # t = time.process_time()
+            #     if (filtered == {}):
+            #         st.error('No results (no event log subset matches the specified manipulation actions).')
+            #     dfgs = df_to_dfg(filtered,nodes,metric)
+            #     # elapsed_time = time.process_time() - t
+            #     # st.write('df_to_dfg: ' + str(elapsed_time/60) + ' minutos')
+                
+            #     st.session_state.dataframe = dfgs
+            #     copia_dict = copy.deepcopy(dfgs)
+
+            #     # t = time.process_time()
+            #     threshold(copia_dict, metric, perc_act, perc_path, nodes)
+            #     # elapsed_time = time.process_time() - t
+            #     # st.write('threshold: ' + str(elapsed_time/60) + ' minutos')
+
+            # except Exception as e:
+            #     # Mostrar un mensaje genérico al usuario en la interfaz de Streamlit
+            #     st.error("Error")
+            #     # Aquí puedes registrar el error detallado para depuración, si lo necesitas
+            #     print(f"Error capturado: {str(e)}")
 
 
             

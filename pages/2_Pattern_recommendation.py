@@ -615,7 +615,7 @@ if len(st.session_state.dataframe):
 
     translater={"Absolute Frequency":"abs_freq","Case Frequency":"case_freq",
                     "Max Repetitions":"max_repetitions", "Total Repetitions":
-                    "total_repetitions","Median CT":"median CT","Mean CT":"mean CT","StDev CT":"stdev","Total CT":"total CT"}
+                    "total_repetitions","Median CT":"median CT","Mean CT":"mean CT","StDev CT":"stdev CT","Total CT":"total CT"}
 
     measure=translater[metric]
 

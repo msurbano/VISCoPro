@@ -141,7 +141,7 @@ def manipulation(df, original, i):
     st.session_state["filter_type_group"][f'ft_group_{i}'] = ft_group
 
     filters1 = ("Mandatory", "Forbidden", "Keep Selected")
-    filters2 = ('Path performance', "Case performance")
+    filters2 = ("Case performance", 'Path performance')
     filters3 = ("Directly Followed", "Eventually Followed", "Keep Selected Fragments")
 
     if ft_group == 'Attribute':

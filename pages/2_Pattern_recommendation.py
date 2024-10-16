@@ -45,7 +45,7 @@ st.set_page_config(page_title="Pattern recommendation")
 maxt = 0
 
 
-def search(expr, dic, inicial): 
+def search(expr, dic, inicial, measure): 
 
     # prueba = {}
     # for pattern in expr:
@@ -53,9 +53,9 @@ def search(expr, dic, inicial):
         # function(dic,pattern, inicial, prueba)
     # return prueba
 
-    return function(dic,expr, inicial)
+    return function(dic,expr, inicial, measure)
     
-def function(graph, expr, inicial):
+def function(graph, expr, inicial, measure):
     # if(expr == 'percentageReworkActivityPerEvents'):
     #     return percentageReworkPerActivityEventsDFG(graph)
     # elif(expr== 'percentageReworkPerActivity'):
@@ -66,9 +66,9 @@ def function(graph, expr, inicial):
     elif(expr == 'Identify DFGs with the minimum number of unique activities'):
         return minuniqueActivitiesDFG(expr, graph) 
     elif(expr == 'Identify infrequent activities'):
-        return infreqact(expr, graph)
+        return infreqact(expr, graph, measure)
     elif(expr == 'Identify the most frequent activities'):
-        return mostfreqact(expr, graph)
+        return mostfreqact(expr, graph, measure)
     elif(expr == 'Identify transitions as bottlenecks'):
         return transbot(expr, graph)
 
@@ -144,7 +144,7 @@ def infreqact(expr, dic):
         graph = datos['graph']
         data = graph.nodes.data()
         st.write(data)
-        min_values.extend(heapq.nsmallest(1, (item[1]['max_repetitions'] for item in data)))
+        min_values.extend(heapq.nsmallest(1, (item[1]['measure'] for item in data)))
     
     # Ordenar los valores mínimos y tomar el menor de ellos
     min_values.sort()
@@ -157,7 +157,7 @@ def infreqact(expr, dic):
         data = graph.nodes.data()
         
         # Filtrar los nodos que tienen una frecuencia menor o igual al mínimo
-        res = [node for node in data if node[1]['max_repetitions'] <= minimo]
+        res = [node for node in data if node[1]['measure'] <= minimo]
         
         if len(res) > 0:
             
@@ -173,7 +173,7 @@ def mostfreqact(expr, dic):
     for key, datos in dic.items():
         graph = datos['graph']
         data = graph.nodes.data()
-        max2 = heapq.nlargest(1, (item[1]['max_repetitions'] for item in data))
+        max2 = heapq.nlargest(1, (item[1]['measure'] for item in data))
         maximos.extend(max2)
 
     lista_max = sorted(maximos, reverse=True)
@@ -185,7 +185,7 @@ def mostfreqact(expr, dic):
         graph = datos['graph']
         data = graph.nodes.data()
         
-        res = [node for node in data if node[1]['max_repetitions'] >= valores_mas_altos] 
+        res = [node for node in data if node[1]['measure'] >= valores_mas_altos] 
         
         if(len(res)>0):
             # key = 'Most freq. activities (max. freq. ' + str(valores_mas_altos) + ') - ' + key 
@@ -612,6 +612,12 @@ if len(st.session_state.dataframe):
                 # 'Identify decision points'] # no implementado aun
 
 
+    translater={"Absolute Frequency":"abs_freq","Case Frequency":"case_freq",
+                    "Max Repetitions":"max_repetitions", "Total Repetitions":
+                    "total_repetitions","Median CT":"median CT","Mean CT":"mean CT","StDev CT":"stdev","Total CT":"total CT"}
+
+    measure=translater[metric]
+
     param = 0
     prueba = {}
 
@@ -621,7 +627,7 @@ if len(st.session_state.dataframe):
         
         
         # st.markdown(f" **{pat}** ")
-        selected = search(pat, dic, inicial)
+        selected = search(pat, dic, inicial, measure)
         # st.write(selected)
         copia_dict = copy.deepcopy(selected)
 

@@ -660,8 +660,20 @@ if len(st.session_state.dataframe):
 
 
     if st.sidebar.button('Show DFGs collection'):
-        selected = search(pattern, param, dic, inicial, measure)
 
-        copia_dict = copy.deepcopy(selected)
+        try:
+            # Código que puede generar un error
+            selected = search(pattern, param, dic, inicial, measure)
 
-        threshold(copia_dict, metric, perc_act, perc_path, nodes)
+            copia_dict = copy.deepcopy(selected)
+
+            threshold(copia_dict, metric, perc_act, perc_path, nodes)
+
+        except Exception as e:
+            # Mostrar un mensaje genérico al usuario en la interfaz de Streamlit
+            st.error("Please make sure to click on the Generate collection of DFGs button in Data Context page.")
+            # Aquí puedes registrar el error detallado para depuración, si lo necesitas
+            print(f"Error capturado: {str(e)}")
+
+            break
+        

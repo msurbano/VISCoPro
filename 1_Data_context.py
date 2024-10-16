@@ -1110,22 +1110,33 @@ if len(st.session_state.original):
         # st.sidebar.write('2) Datos manipulados')
 
         if st.button('Generate collection of DFGs'):
-            st.markdown("""---""")
-            
-            # t = time.process_time()
-            if (filtered == {}):
-                st.error('No results (no event log subset matches the specified manipulation actions).')
-            dfgs = df_to_dfg(filtered,nodes,metric)
-            # elapsed_time = time.process_time() - t
-            # st.write('df_to_dfg: ' + str(elapsed_time/60) + ' minutos')
-            
-            st.session_state.dataframe = dfgs
-            copia_dict = copy.deepcopy(dfgs)
 
-            # t = time.process_time()
-            threshold(copia_dict, metric, perc_act, perc_path, nodes)
-            # elapsed_time = time.process_time() - t
-            # st.write('threshold: ' + str(elapsed_time/60) + ' minutos')
+            try:
+                st.markdown("""---""")
+            
+                # t = time.process_time()
+                if (filtered == {}):
+                    st.error('No results (no event log subset matches the specified manipulation actions).')
+                dfgs = df_to_dfg(filtered,nodes,metric)
+                # elapsed_time = time.process_time() - t
+                # st.write('df_to_dfg: ' + str(elapsed_time/60) + ' minutos')
+                
+                st.session_state.dataframe = dfgs
+                copia_dict = copy.deepcopy(dfgs)
+
+                # t = time.process_time()
+                threshold(copia_dict, metric, perc_act, perc_path, nodes)
+                # elapsed_time = time.process_time() - t
+                # st.write('threshold: ' + str(elapsed_time/60) + ' minutos')
+
+            except Exception as e:
+                # Mostrar un mensaje genérico al usuario en la interfaz de Streamlit
+                st.error("Error")
+                # Aquí puedes registrar el error detallado para depuración, si lo necesitas
+                print(f"Error capturado: {str(e)}")
+
+
+            
         
 
 

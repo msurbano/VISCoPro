@@ -681,7 +681,7 @@ def manipulation(df, original, i):
                     if(key==""):
                         filtered_dataframe[v2] = grupo
                     else:
-                        filtered_dataframe[key + ' - ' + v2] = grupo
+                        filtered_dataframe[key + ' - ' + str(v2)] = grupo
             else:
                 j=0
                 for j in rango:

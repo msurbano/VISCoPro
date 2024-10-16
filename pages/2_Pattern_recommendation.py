@@ -194,6 +194,8 @@ def mostfreqact(expr, dic, measure):
     return prueba
 
 def transbot(expr, dic, measure):
+    st.write(measure)
+    
     prueba={}
     maximo = float('-inf')  # Inicializa el máximo con un valor muy pequeño
     grafos_maximos = []

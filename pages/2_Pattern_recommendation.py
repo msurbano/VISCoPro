@@ -642,7 +642,7 @@ if len(st.session_state.dataframe):
             # Aquí puedes registrar el error detallado para depuración, si lo necesitas
             print(f"Error capturado: {str(e)}")
 
-            raise
+            break
 
 
         # selected = search(pat, dic, inicial, measure)

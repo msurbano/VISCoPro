@@ -631,15 +631,20 @@ if len(st.session_state.dataframe):
         try:
             # Código que puede generar un error
             selected = search(pat, dic, inicial, measure)
+            copia_dict = copy.deepcopy(selected)
+
+            threshold(copia_dict, metric, perc_act, perc_path, nodes)
+            st.markdown("""---""")
+            
         except Exception as e:
             # Mostrar un mensaje genérico al usuario en la interfaz de Streamlit
             st.error("Oops! Algo salió mal. Por favor, intenta de nuevo.")
             # Aquí puedes registrar el error detallado para depuración, si lo necesitas
             print(f"Error capturado: {str(e)}")
 
-        # selected = search(pat, dic, inicial, measure)
-        # st.write(selected)
-        copia_dict = copy.deepcopy(selected)
 
-        threshold(copia_dict, metric, perc_act, perc_path, nodes)
-        st.markdown("""---""")
+        # selected = search(pat, dic, inicial, measure)
+        # copia_dict = copy.deepcopy(selected)
+
+        # threshold(copia_dict, metric, perc_act, perc_path, nodes)
+        # st.markdown("""---""")

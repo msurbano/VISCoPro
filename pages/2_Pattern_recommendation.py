@@ -45,7 +45,7 @@ st.set_page_config(page_title="Pattern recommendation")
 maxt = 0
 
 
-def search(expr, dic, inicial, measure): 
+def search(expr, dic, inicial): 
 
     # prueba = {}
     # for pattern in expr:
@@ -53,10 +53,9 @@ def search(expr, dic, inicial, measure):
         # function(dic,pattern, inicial, prueba)
     # return prueba
 
-    return function(dic,expr, inicial, measure)
+    return function(dic,expr, inicial)
     
-def function(graph, expr, inicial, measure):
-    st.write(measure)
+def function(graph, expr, inicial):
     # if(expr == 'percentageReworkActivityPerEvents'):
     #     return percentageReworkPerActivityEventsDFG(graph)
     # elif(expr== 'percentageReworkPerActivity'):
@@ -67,32 +66,32 @@ def function(graph, expr, inicial, measure):
     elif(expr == 'Identify DFGs with the minimum number of unique activities'):
         return minuniqueActivitiesDFG(expr, graph) 
     elif(expr == 'Identify infrequent activities'):
-        return infreqact(expr, graph, measure)
+        return infreqact(expr, graph)
     elif(expr == 'Identify the most frequent activities'):
-        return mostfreqact(expr, graph, measure)
+        return mostfreqact(expr, graph)
     elif(expr == 'Identify transitions as bottlenecks'):
-        return transbot(expr, graph, measure)
+        return transbot(expr, graph)
 
 
     elif(expr == 'Identify the most frequent fragment'):
         return mostfreqfrag(graph, inicial)
 
     elif(expr == 'Identify transitions with high duration'):
-        return transduration(graph, paramF, measure)
+        return transduration(graph, paramF)
 
     elif(expr == 'Identify activities with high duration'):
-        return actduration(graph, paramF, measure)
+        return actduration(graph, paramF)
 
     
 
     elif(expr == 'Identify activities as bottlenecks'):
-        return actbot(graph, inicial, prueba, measure)
+        return actbot(graph, inicial, prueba)
 
     elif(expr == 'Identify resources with high workload'):
-        return mostfreqact(expr, graph, measure)
+        return mostfreqact(expr, graph)
 
     elif(expr == 'Identify resources as bottlenecks'):
-        return transbot(expr, graph, measure)
+        return transbot(expr, graph)
 
 
 # Hechos:
@@ -135,7 +134,7 @@ def maxuniqueActivitiesDFG(expr, dic):
 
     return prueba
 
-def infreqact(expr, dic, measure):
+def infreqact(expr, dic):
     # st.write('hola')
     prueba={}
     min_values = []
@@ -144,7 +143,7 @@ def infreqact(expr, dic, measure):
     for key, datos in dic.items():
         graph = datos['graph']
         data = graph.nodes.data()
-        min_values.extend(heapq.nsmallest(1, (item[1][measure] for item in data)))
+        min_values.extend(heapq.nsmallest(1, (item[1]['abs_freq'] for item in data)))
     
     # Ordenar los valores mínimos y tomar el menor de ellos
     min_values.sort()
@@ -157,7 +156,7 @@ def infreqact(expr, dic, measure):
         data = graph.nodes.data()
         
         # Filtrar los nodos que tienen una frecuencia menor o igual al mínimo
-        res = [node for node in data if node[1][measure] <= minimo]
+        res = [node for node in data if node[1]['abs_freq'] <= minimo]
         
         if len(res) > 0:
             
@@ -166,14 +165,14 @@ def infreqact(expr, dic, measure):
     # st.write(prueba)
     return prueba
  
-def mostfreqact(expr, dic, measure):
+def mostfreqact(expr, dic):
     prueba={}
     maximo = 0
     maximos=[]
     for key, datos in dic.items():
         graph = datos['graph']
         data = graph.nodes.data()
-        max2 = heapq.nlargest(1, (item[1][measure] for item in data))
+        max2 = heapq.nlargest(1, (item[1]['abs_freq'] for item in data))
         maximos.extend(max2)
 
     lista_max = sorted(maximos, reverse=True)
@@ -185,7 +184,7 @@ def mostfreqact(expr, dic, measure):
         graph = datos['graph']
         data = graph.nodes.data()
         
-        res = [node for node in data if node[1][measure] >= valores_mas_altos] 
+        res = [node for node in data if node[1]['abs_freq'] >= valores_mas_altos] 
         
         if(len(res)>0):
             # key = 'Most freq. activities (max. freq. ' + str(valores_mas_altos) + ') - ' + key 
@@ -193,9 +192,7 @@ def mostfreqact(expr, dic, measure):
 
     return prueba
 
-def transbot(expr, dic, measure):
-    st.write(measure)
-    measure='mean'
+def transbot(expr, dic):
     prueba={}
     maximo = float('-inf')  # Inicializa el máximo con un valor muy pequeño
     grafos_maximos = []
@@ -204,7 +201,7 @@ def transbot(expr, dic, measure):
         graph = datos['graph']
        
         data = graph.edges.data()
-        max2 = max(item[2][measure] for item in data)
+        max2 = max(item[2]['mean CT'] for item in data)
         if max2 > maximo:
             
             maximo = max2
@@ -249,7 +246,7 @@ def mostfreqfrag(dic, inicial):
 
     # return prueba
 
-def actduration(dic, param, measure):
+def actduration(dic, param):
 
     prueba = {}
     for key, datos in dic.items():
@@ -258,21 +255,20 @@ def actduration(dic, param, measure):
 
         data = graph.nodes.data()
         # st.write(data)
-        suma = sum(item[2][measure] for item in data)
+        suma = sum(item[2]['mean CT'] for item in data)
 
         if(param=='Mean cycle time of transitions'):
             promedio =  suma / len(data)
-            res = [node for node in data if node[2][measure] > promedio] 
+            res = [node for node in data if node[2]['mean CT'] > promedio] 
         else:
-            res = [node for node in data if node[2][measure] > param*60]
+            res = [node for node in data if node[2]['mean CT'] > param*60]
     
         if(len(res)>0):
             prueba[key] = datos 
 
     return prueba
 
-
-def actbot(dic, param, inicial, measure):
+def actbot(dic, param, inicial):
     dfg, sa, ea = pm4py.discover_dfg(inicial, activity_key=nodes)
     prueba = {}
     maximo = 0
@@ -280,7 +276,7 @@ def actbot(dic, param, inicial, measure):
     for key, datos in dic.items():
         graph = datos['graph']
         data = graph.nodes.data()
-        max2 = heapq.nlargest(3, (item[2][measure] for item in data))
+        max2 = heapq.nlargest(3, (item[2]['mean CT'] for item in data))
         maximos.extend(max2)
     for key, datos in dic.items():
         graph = datos['graph']
@@ -288,10 +284,10 @@ def actbot(dic, param, inicial, measure):
         lista_max = sorted(maximos, reverse=True)
         if(param=='Maximum CT of activities'):
             valores_mas_altos = lista_max[0]
-            res = [node for node in data if node[2][measure] >= valores_mas_altos] 
+            res = [node for node in data if node[2]['mean CT'] >= valores_mas_altos] 
         else: 
             valores_mas_altos = lista_max[:param] 
-            res = [node for node in data if node[2][measure] >= min(valores_mas_altos)]
+            res = [node for node in data if node[2]['mean CT'] >= min(valores_mas_altos)]
         if(len(res)>0):
             prueba[key] = datos 
     
@@ -618,18 +614,13 @@ if len(st.session_state.dataframe):
     param = 0
     prueba = {}
 
-    translater={"Absolute Frequency":"abs_freq","Case Frequency":"case_freq",
-                    "Max Repetitions":"max_repetitions", "Total Repetitions":
-                    "total_repetitions","Median CT":"median CT","Mean CT":"mean CT","StDev CT":"stdev","Total CT":"total CT"}
-    measure=translater[metric]
-
     for pat in pattern:
         # st.write(pat)
         # st.write(f"# {pat}")
         
         
         # st.markdown(f" **{pat}** ")
-        selected = search(pat, dic, inicial, measure)
+        selected = search(pat, dic, inicial)
         # st.write(selected)
         copia_dict = copy.deepcopy(selected)
 

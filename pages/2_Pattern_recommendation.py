@@ -143,7 +143,7 @@ def infreqact(expr, dic, measure):
     for key, datos in dic.items():
         graph = datos['graph']
         data = graph.nodes.data()
-        st.write(data)
+        # st.write(data)
         min_values.extend(heapq.nsmallest(1, (item[1][measure] for item in data)))
     
     # Ordenar los valores mínimos y tomar el menor de ellos
@@ -202,7 +202,7 @@ def transbot(expr, dic, measure):
         graph = datos['graph']
        
         data = graph.edges.data()
-        st.write(data)
+        # st.write(data)
         max2 = max(item[2][measure] for item in data)
         if max2 > maximo:
             

@@ -143,6 +143,7 @@ def infreqact(expr, dic):
     for key, datos in dic.items():
         graph = datos['graph']
         data = graph.nodes.data()
+        st.write(data)
         min_values.extend(heapq.nsmallest(1, (item[1]['max_repetitions'] for item in data)))
     
     # Ordenar los valores mínimos y tomar el menor de ellos

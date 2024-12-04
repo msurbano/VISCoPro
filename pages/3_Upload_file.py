@@ -25,8 +25,10 @@ if uploaded_file:
             # df = pd.read_excel(uploaded_file)
             log = pm4py.read_xes(uploaded_file)
             df = pm4py.convert_to_dataframe(log)
+            st.write(df)
+
     except:
-        st.error('Error loading file. Please be sure to either upload a CSV or an XLSX')
+        st.error('Error loading file. Please be sure to either upload a CSV or an XES')
 
 
     # df = pd.DataFrame()

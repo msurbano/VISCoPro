@@ -10,25 +10,33 @@ st.write('### Upload event log')
 uploaded_file = st.file_uploader('Choose file')
 
 if uploaded_file:
-    bytes_data = uploaded_file.getvalue()
-
-    stringio = StringIO(uploaded_file.getvalue().decode("ISO-8859-1"))
-    #st.write(stringio)
-
-    # To read file as string:
-    string_data = stringio.read()
-
-    try:
+    if uploaded_file.name.endswith('.xes'):
+        try:
+            # Crear un archivo temporal
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.xes') as temp_file:
+                temp_file.write(uploaded_file.read())  # Escribir el contenido del archivo subido
+                temp_file_path = temp_file.name  # Obtener la ruta del archivo temporal
+            
+            # Leer el archivo XES desde la ruta temporal
+            log = pm4py.read_xes(temp_file_path)
+            df = pm4py.convert_to_dataframe(log)
+        except Exception as e:
+            st.error(f"Error processing XES file: {str(e)}")
+    elif uploaded_file.name.endswith('.csv'):
         try:
             df = pd.read_csv(uploaded_file)
-        except:
+        except Exception as e:
+            st.error(f"Error processing CSV file: {str(e)}")
+    elif uploaded_file.name.endswith(('.xls', '.xlsx')):
+        try:
+            # Leer archivo Excel con pandas
             df = pd.read_excel(uploaded_file)
-            # log = pm4py.read_xes(uploaded_file)
-            # df = pm4py.convert_to_dataframe(log)
-            # st.write(df)
+        except Exception as e:
+            st.error(f"Error processing Excel file: {str(e)}")
+    else:
+        st.error("Unsupported file format. Please upload a CSV or XES file")
 
-    except:
-        st.error('Error loading file. Please be sure to either upload a CSV or an XES')
+
 
 
     # df = pd.DataFrame()

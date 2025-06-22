@@ -10,7 +10,7 @@ To run VISCoPro locally, follow these steps:
 3. Install the dependencies:
 `pip install -r requirements.txt`
 4. Run the following command to launch the application:
-`python -m streamlit run data_context.py`
+`python -m streamlit run 1_Data_Context.py`
 
 ## Access via Web
 

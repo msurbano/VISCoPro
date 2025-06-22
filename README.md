@@ -2,9 +2,21 @@
 
 Process mining is a discipline that enables the analysis of business processes from event logs. The Directly-Follows Graph (DFG) is one of the most used visualization types employed in this domain. However, the extraction of valuable information from DFGs requires significant manual effort from users due to the limitations of current process mining tools. To address this challenge, we propose VISCoDFG, a visual query tool designed to ease the manipulation of event logs and the management of DFG collections. The system allows users to query these DFGs to uncover significant insights efficiently. The tool proposed has been developed with Streamlit (https://streamlit.io/), which is a framework that enables the conversion of data Python scripts into shareable web applications.
 
+## Running VISCoPro Locally
+
+To run VISCoPro locally, follow these steps:
+1. Clone the repository to your local machine.
+2. Open a terminal and navigate to the root directory of the repository.
+3. Install the dependencies:
+`pip install -r requirements.txt`
+4. Run the following command to launch the application:
+`python -m streamlit run data_context.py`
+
+## Access via Web
+
 VISCoPro is available at https://viscopro.streamlit.app/.
 
-### Use case: Find bottlenecks in the process 
+## Use case: Find bottlenecks in the process 
 
 Data source: Business Process Intelligence Challenge 2019 Event Log (https://icpmconference.org/2019/icpm-2019/contests-challenges/bpi-challenge-2019/). In this BPI Challenge, there is data from a large multinational company operating from the Netherlands in the field of paints and coatings. Specifically, the event log contains information about the purchasing document management process and four types of data flows. Due to the large size of this dataset, we selected only a subset of cases from this event dataset for the use case, considering only the central cases with less noise. This subset of data contains 50.000 traces, 318.272 events, and 21 attributes.
   
@@ -50,4 +62,6 @@ We focused on finding bottlenecks in the process, as this is one of the most stu
 
 ![image](https://github.com/msurbano/VISCoPro/assets/92515344/55947a9e-5d77-480f-9913-5742e102fcf8)
 
-Furthermore, a video tutorial for this use case is accessible at https://www.youtube.com/watch?v=zqXVZPNGKaY.
+## Demo Video
+
+Furthermore, a video tutorial is accessible at https://www.youtube.com/watch?v=zqXVZPNGKaY.

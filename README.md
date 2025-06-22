@@ -5,11 +5,12 @@ Process mining is a discipline that enables the analysis of business processes f
 ## Running VISCoPro Locally
 
 To run VISCoPro locally, follow these steps:
-1. Clone the repository to your local machine.
-2. Open a terminal and navigate to the root directory of the repository.
-3. Install the dependencies:
+1. Make sure you have Python 3.8+ installed, as well as `graphviz` on your system.
+2. Clone the repository to your local machine.
+3. Open a terminal and navigate to the root directory of the repository.
+4. Install the dependencies:
 `pip install -r requirements.txt`
-4. Run the following command to launch the application:
+5. Run the following command to launch the application:
 `python -m streamlit run 1_Data_Context.py`
 
 ## Access via Web

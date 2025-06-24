@@ -46,7 +46,7 @@ st.set_page_config(page_title="Main page")
 
 pd.set_option("styler.render.max_elements", 2000000)
 
-st.title("VISCoPro")
+st.title("VISCoPro test")
 st.markdown("""---""")
 
 # pm4py_version = pm4py.__version__

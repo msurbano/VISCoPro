@@ -46,7 +46,7 @@ st.set_page_config(page_title="Main page")
 
 pd.set_option("styler.render.max_elements", 2000000)
 
-st.title("VISCoPro test")
+st.title("VISCoPro")
 st.markdown("""---""")
 
 # pm4py_version = pm4py.__version__
@@ -881,7 +881,7 @@ def threshold(datos, metric, a, p, nodes):
                 # ------------------------------ modification
                 st.download_button(
                     label="Descargar SVG",
-                    data=f,
+                    data=svg_data,
                     file_name='dfg' + str(ident) + '.svg',
                     mime='image/svg+xml'
                 )

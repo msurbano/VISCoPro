@@ -875,7 +875,7 @@ def threshold(datos, metric, a, p, nodes):
             st.write(str(key))
 
             # st.image('./figures/dfg' + str(ident) + '.svg')
-            with open('./figures/dfg' + str(ident) + '.svg', 'r', encoding='utf-8') as file:
+            with open('./figures/dfg' + str(ident) + '.svg', 'rb', encoding='utf-8') as file:
                 svg_data = file.read()
                 st.image(svg_data)
                 # ------------------------------ modification

@@ -878,13 +878,13 @@ def threshold(datos, metric, a, p, nodes):
             with open('./figures/dfg' + str(ident) + '.svg', 'r', encoding='utf-8') as file:
                 svg_data = file.read()
                 st.image(svg_data)
-                # ------------------------------ modification
-                st.download_button(
-                    label="Descargar SVG",
-                    data=svg_data,
-                    file_name='dfg' + str(ident) + '.svg',
-                    mime='image/svg+xml'
-                )
+                # # ------------------------------ modification
+                # st.download_button(
+                #     label="Descargar SVG",
+                #     data=svg_data,
+                #     file_name='dfg' + str(ident) + '.svg',
+                #     mime='image/svg+xml'
+                # )
 
             # Mostrar el SVG utilizando HTML
             # st.markdown(f'<div>{svg_data}</div>', unsafe_allow_html=True)
